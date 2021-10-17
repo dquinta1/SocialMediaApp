@@ -1,10 +1,10 @@
 import './App.css';
-import Form from './Form';
+import LandingPage from './Auth/LandingPage';
 
 function App() {
   return (
     <div className="App">
-      <Form />
+      <LandingPage />
     </div>
   );
 }
