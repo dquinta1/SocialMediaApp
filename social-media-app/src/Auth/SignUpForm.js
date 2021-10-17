@@ -20,7 +20,7 @@ const schema = yup.object().shape({
     confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
 });
 
-const SignUpForm = () => {
+const SignUpForm = ({ history }) => {
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(schema),
     });
@@ -28,6 +28,7 @@ const SignUpForm = () => {
     const onSubmit = (data) => {
         // TODO: store data into server  
         console.log(data)
+        history.push('/main');
     };
 
     return (
@@ -58,10 +59,10 @@ const SignUpForm = () => {
                 <input className="form-input" {...register('zipcode')} placeholder="Zipcode"/>
                 <p>{ errors.zipcode?.message }</p>
 
-                <input className="form-input" {...register('password')} placeholder="Password"/>
+                <input type='password' className="form-input" {...register('password')} placeholder="Password"/>
                 <p>{ errors.password?.message }</p>
 
-                <input className="form-input" {...register('confirmPassword')} placeholder="Confirm Password"/>
+                <input type='password' className="form-input" {...register('confirmPassword')} placeholder="Confirm Password"/>
                 <p>{ errors.confirmPassword && 'Passwords do not match' }</p>
 
                 <input type="submit"/>
