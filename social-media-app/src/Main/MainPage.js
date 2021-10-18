@@ -1,13 +1,13 @@
 import React from 'react'
 import auth from '../Auth/utils/auth'
-import { Button, Layout, Menu, Avatar} from 'antd';
-import {
-    AppstoreOutlined,
-    UserOutlined,
-    UploadOutlined,
-  } from '@ant-design/icons';
+import { Button, Layout, Menu, Avatar, Space, List, Card, Image} from 'antd';
+import { UserOutlined, CameraOutlined } from '@ant-design/icons';
 
 const { Header, Sider, Content, Footer } = Layout;
+const { Meta } = Card;
+const loremTitle = 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit';
+const loremDescription = "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto";
+const loremPic = 'https://picsum.photos/200/200';
 
 const MainPage = ({ history }) => {
 
@@ -27,27 +27,12 @@ const MainPage = ({ history }) => {
                         left: 0,
                     }}>
                     <div className="logo">
-                        <Avatar size={45} icon={<UserOutlined />} src='' />
-                            Username
-                        <Button type='link' className='profile-btn' id='btn-profile' href='/profile'>
-                            Profile
-                        </Button>
-                            Catchphrase
-
+                        {AccountFragment()}
                     </div>
                     <Menu theme="dark" mode="inline">
-                        <Menu.Item key="1">
-                            <div className="follower" style={{display: 'inline-block'}}>
-                                <Avatar size='24' icon={<UserOutlined />} />
-                                Follower 1 
-                            </div>
-                        </Menu.Item>
-                        <Menu.Item key="2" icon={<AppstoreOutlined />}>
-                            Follower 2 
-                        </Menu.Item>
-                        <Menu.Item key="3" icon={<UploadOutlined />}>
-                            Follower 3 
-                        </Menu.Item>
+                        {FollowerMenuItem('1', 'Follower Name', '')}
+                        {FollowerMenuItem('2', 'Follower Name', '')}
+                        {FollowerMenuItem('3', 'Follower Name', '')}
                         <Menu.Item key='signout' className='sign-out' style={{ textAlign: 'center', position: 'absolute', marginLeft: -50, bottom: 5}}>
                             <Button type='primary' danger id='btn-logout' className="btn-logout" onClick= { logout }>
                                 Sign Out
@@ -60,15 +45,69 @@ const MainPage = ({ history }) => {
                         <h1>Main</h1>
                     </Header>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                        <div className="main-layout-background" style={{ padding: 24, textAlign: 'center' }}>
-                            Posts
-                        </div>
+                        <Space >
+                            <List itemLayout='vertical'>
+                                <List.Item>
+                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                </List.Item>
+                                <List.Item>
+                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                </List.Item>
+                                <List.Item>
+                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                </List.Item>
+                                <List.Item>
+                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                </List.Item>
+                            </List>
+                        </Space>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Something interesting at the end of the page</Footer>
                 </Layout>
             </Layout>
         </>
     )
+
+    function PostCard(title, description, src) {
+        return <Card hoverable style={{ width: '500px' }} cover={<Image src={ src } placeholder={ <CameraOutlined /> }/>}>
+            <Meta title={title} description={description} />
+        </Card>;
+    }
+
+    function FollowerMenuItem(key, name, src) {
+        return <Menu.Item key={ key }>
+            <Space size='middle' align='center'>
+                <Avatar className='avatar' size='24' icon={<UserOutlined />} src={ src } />
+                { name }
+            </Space>
+        </Menu.Item>;
+    }
+
+    function AccountFragment() {
+        return <Space direction='vertical' style={{ paddingTop: '8px' }}>
+            <Space size={25}>
+                <Avatar className='avatar' id='avatar-profile' size={55} icon={<UserOutlined />} src='' />
+                <Space align='center' size={0} direction='vertical' style={{ fontSize: '14px', color: '#fff' }}>
+                    <p style={{ lineHeight: '0px' }} id='avatar-username'>Username</p>
+                    <Button type='link' className='profile-btn' id='btn-profile' href='/profile' style={{ fontSize: '12px', top: '-5px' }}>
+                        Profile
+                    </Button>
+                </Space>
+            </Space>
+            <Space size={5} style={{ fontStyle: 'italic', fontSize: '13px', color: 'white', lineHeight: '-1px' }}>
+                <p id='status'>"Catchphrase"</p>
+                <Button type='text' style={{
+                    position: 'absolute',
+                    right: 0,
+                    color: 'white',
+                    fontSize: '10px'
+                }}
+                onClick={() => { /*TODO*/ } }>
+                    Change
+                </Button>
+            </Space>
+        </Space>;
+    }
 }
 
 export default MainPage;
