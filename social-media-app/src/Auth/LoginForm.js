@@ -1,6 +1,7 @@
 import React from 'react';
 import auth from './utils/auth';
 import MockDB from './utils/MockDB';
+import { Button } from 'antd';
 
 const LoginForm = ({ history }) => {
 
@@ -46,12 +47,12 @@ const LoginForm = ({ history }) => {
             </div>
 
             <div className="input-div">
-                <button id='btn-login' className='login-btn' onClick= { login }>
+                <Button id='btn-login' className="login-btn" onClick= { login }>
                     Log In
-                </button>
-                <button className= 'signup-btn' onClick= { signUp }>
+                </Button>
+                <Button type='primary' className="signup-btn" onClick= { signUp }>
                     Sign Up
-                </button>
+                </Button>
             </div>
 
             <div id='auth-error-message' className="auth-error-message"></div>

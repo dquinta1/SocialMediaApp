@@ -1,5 +1,26 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
+}
+
+.logo {
+  height: 60px;
+  margin: 3px;
+}
+
+.btn-logout {
+  position: absolute;
+  bottom: 0;
+}
+
+.follower {
+  display: inline-block;
+  padding: 2px;
+}
+
+.main-layout .main-layout-background {
+  background: #fff;
 }
 
 .App-logo {
