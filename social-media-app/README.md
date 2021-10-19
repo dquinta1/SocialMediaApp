@@ -1,70 +1,20 @@
-# Getting Started with Create React App
+# Social Media App Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### TODO:
 
-## Available Scripts
+#### Main:
+- Show all 10 articles for each user, at least the first three have images. There should initially be 10 registered users
+- A search box, that filters the displayed articles by text or author, but not date or article id
+- The username and profile picture are shown. The profile picture can be hard coded.
+- The user's status headline is shown. The initial status headline is their company's catch phrase.
+- Sidebar listing 3 followed users. The list should include a picture, name, and status headline for each user. The users follow the next 3 users in the user list. User with id 1 follows users with ids 2, 3, and 4. The user with id 10 follows users with ids 1, 2, and 3.
+- Text field and button to add a user to the following list. For non-empty text, the follower is added to the sidebar with an arbitrary (i.e., hard coded) image and headline message
+- Each followed user has a button to unfollow which removes that user from the list
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Profile:
+- The current username, email address, phone number, and zipcode are displayed
+- There are fields to update each user piece of user information along with a field to update the user's password. The password should not be shown in plain text.
+- Show the user's current profile picture
+< li>There is a button to upload a new profile picture. But the button currently does nothing after a file is chosen.
+- There is a button to update the user's values based on user input. The button validates each of the fields that are changed and then updates the displayed value as in the previous assignment.
+- There is a button or link to navigate back to the main page
