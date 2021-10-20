@@ -1,6 +1,6 @@
 import React from 'react';
 import auth from './utils/auth';
-import MockDB from './utils/MockDB';
+import MockDB from '../DB/MockDB';
 import { Button } from 'antd';
 
 const LoginForm = ({ history }) => {
@@ -11,18 +11,14 @@ const LoginForm = ({ history }) => {
 
     let login = () => {
         auth.login(() => {
-            let data = db.data;
+            let data = db.users.data;
             let message = 'Invalid credentials';
 
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-                
-                if (element.username === username.value && 
-                    element.address.street == password.value) {
-                        history.push('/main');
-                        message = '';
-                        break;
-                    }
+            if (username.value in data) {
+                if (data[username.value]['address']['street'] === password.value) {
+                    history.push('/main');
+                    message = '';
+                }
             }
             document.getElementById('auth-error-message').innerText = message;
         });

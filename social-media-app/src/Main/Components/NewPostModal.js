@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal, Input } from 'antd';
+import { Button, Modal, Input, Upload } from 'antd';
 import { 
     PlusOutlined,
     FileImageOutlined
@@ -33,6 +33,8 @@ function NewPostModal() {
     const handleCancel = () => {
         setTitle(prevTitle);
         setDescription(prevDescription);
+        document.getElementById('new-post-modal-textArea-title').value = '';
+        document.getElementById('new-post-modal-textArea-description').value = '';
         setIsModalVisible(false);
     };
 
@@ -47,20 +49,21 @@ function NewPostModal() {
             onOk={handleOk} 
             onCancel={handleCancel}
             footer={[
-                <Button type='link' icon={<FileImageOutlined />} style={{position: 'absolute', left: '2%'}}/>,
-                <Button key="submit" type="primary" /*{loading={loading}}*/ onClick={handleOk}>
-                    Submit
-                </Button>,
-                <Button key="back" onClick={ handleCancel }>
-                    Cancel
-                </Button>
+                <div style={{display: 'flex', justifyContent:'end'}}>
+                    <Upload accept={'.png,.jpg,.jpeg'} maxCount={1} onChange={() => {/*TODO: Implement this*/}}>
+                        <Button type='link' size='middle' icon={<FileImageOutlined />}/>
+                    </Upload>
+                    <Button key="submit" type="primary" /*{loading={loading}}*/ onClick={handleOk}>
+                        Submit
+                    </Button>
+                    <Button key="back" onClick={ handleCancel }>
+                        Cancel
+                    </Button>
+                </div>
             ]}
         >
-            <TextArea rows={1} placeholder='Title' onChange={ (e) => { 
-                                                                        setTitle(e.target.value);
-                                                                        e.target.value = '';
-                                                                         } }/> 
-            <TextArea rows={4} placeholder='Description...' onChange={ (e) => { setDescription(e.target.value) } }/>
+            <TextArea id='new-post-modal-textArea-title' rows={1} placeholder='Title' onChange={ (e) => { setTitle(e.target.value) } }/> 
+            <TextArea id='new-post-modal-textArea-description' rows={4} placeholder='Description...' onChange={ (e) => { setDescription(e.target.value) } }/>
         </Modal>
         </>
     );

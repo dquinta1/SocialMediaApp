@@ -1,4 +1,4 @@
-import { Card, Image } from 'antd';
+import { Card, Image, Space, Typography } from 'antd';
 import { 
     CameraOutlined, 
     EditOutlined, 
@@ -6,8 +6,9 @@ import {
 } from '@ant-design/icons';
 
 const { Meta } = Card;
+const { Text } = Typography;
 
-function PostCard(title, description, src) {
+function PostCard(title, description, author, timestamp, src) {
     return (
         <Card hoverable style={{ width: '500px' }} 
         cover={<Image src={ src } placeholder={ <CameraOutlined /> }/>}
@@ -16,6 +17,14 @@ function PostCard(title, description, src) {
             <EditOutlined key="edit" onClick={ () => {/*TODO: implement this*/} }/>,
         ]}>
             <Meta title={title} description={description} />
+            <Space style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <Text>
+                    {author}
+                </Text>
+                <Text>
+                    {timestamp}
+                </Text>
+            </Space>
         </Card>
     );
 }

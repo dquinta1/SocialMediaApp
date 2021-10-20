@@ -4,24 +4,31 @@ import AccountFragment from './Components/AccountFragment';
 import FollowerListItem from './Components/FollowerListItem';
 import PostCard from './Components/PostCard';
 import NewPostModal from './Components/NewPostModal';
-import { Button, Layout, Space, List, Card, Input} from 'antd';
+import NewUserModal from './Components/NewUserModal';
+import MockDB from '../DB/MockDB';
+import { Button, Layout, Space, List, Input} from 'antd';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Search } = Input;
+
 const loremTitle = 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit';
 const loremDescription = "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto";
 const loremPic = 'https://picsum.photos/200/200';
 
 const MainPage = ({ history }) => {
 
+    let db = MockDB();
+
+    
+
     const onSearch = (value) => {
         // TODO: implement this
         console.log(value);
     }
 
-    let logout = () => {
+    const logout = () => {
         auth.logout( () => {
-            history.push('/');
+            history.replace('/');
         })
     }
 
@@ -47,10 +54,14 @@ const MainPage = ({ history }) => {
                         <List.Item>
                             { FollowerListItem('Follower Name', 'Headline', loremPic) }
                         </List.Item>
+                        <List.Item>
+                            <NewUserModal />
+                        </List.Item>
                     </List>
                     <Button type='primary' danger id='btn-logout' className="btn-logout" 
                             onClick= { logout }
-                            style={{ textAlign: 'center', position: 'absolute', marginLeft: -50, bottom: 15}}>
+                            style={{left: '50px'}}
+                            >
                         Sign Out
                     </Button>
                 </Sider>
@@ -65,18 +76,17 @@ const MainPage = ({ history }) => {
                             <NewPostModal />
                             <List itemLayout='vertical'>
                                 <List.Item>
-                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
                                 </List.Item>
                                 <List.Item>
-                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
                                 </List.Item>
                                 <List.Item>
-                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
                                 </List.Item>
                                 <List.Item>
-                                    { PostCard(loremTitle, loremDescription, loremPic) }
+                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
                                 </List.Item>
-                                
                             </List>
                         </Space>
                     </Content>
