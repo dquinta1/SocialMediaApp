@@ -5,35 +5,53 @@ const apiURL = 'https://jsonplaceholder.typicode.com/';
 
 function MockDB() {
     const [users, setUsers] = useState({});
+    const [iDs, setIDs] = useState({});
     const [posts, setPosts] = useState({});
 
     useEffect(() => {
-        axios.get(apiURL+'users').then( (res) => {
-            const info = res.data;
+        axios.all([
+            axios.get(apiURL + 'users'),
+            axios.get(apiURL + 'posts')
+        ])
+        .then( response => {
+            let info = response[0].data;
             let data = {};
+            let id_data = {};
 
             for (let index = 0; index < info.length; index++) {
                 const element = info[index];
                 data[element.username] = element;
+                id_data[element.id] = element;
+
             }
             setUsers({ data });
-        });
 
-        axios.get(apiURL+'posts').then( (res) =>{
-            const info = res.data;
-            let data = {};
+            data = id_data;
+            setIDs({ data });
+
+            info = response[1].data;
+            data = {};
 
             for (let index = 0; index < info.length; index++) {
                 const element = info[index];
-                data[element.userId] = element;
+                
+                if (!(element.userId in data)) {
+                    data[element.userId] = [element];
+                }
+
+                else {
+                    data[element.userId].push(element);
+                }
             }
             setPosts({ data });
+
         });
 
-      }, [setUsers, setPosts]);
+      }, [users, iDs, posts]);
 
     return {
         users,
+        iDs,
         posts
     };
 }

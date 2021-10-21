@@ -17,6 +17,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path='/' component={ LoginForm } />
+          <Route exact path='/login' component={ LoginForm } />
           <Route exact path='/signup' component={ SignUpForm } />
           <Route exact path='/main' component={ MainPage } /> {/*Change Route to ProtectedRoute when done*/} 
           <Route exact path='/profile' component={ ProfilePage } /> {/*Change Route to ProtectedRoute when done*/} 

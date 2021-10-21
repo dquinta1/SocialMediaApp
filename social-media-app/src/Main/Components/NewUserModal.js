@@ -1,13 +1,19 @@
 import { useState } from 'react';
+import { useState as useHookState } from '@hookstate/core';
+import store from '../../DB/store';
 import { Button, Modal, Input, Upload } from 'antd';
 import { 
     PlusOutlined,
     FileImageOutlined
 } from '@ant-design/icons';
+import { addNewFollower } from '../../DB/utils/store-utils';
 
 const { TextArea } = Input;
 
 const NewUserModal = () => {
+
+    const { followers } = useHookState(store);
+
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [name, setName] = useState('New Follower');
     const [prevName, setPrevName] = useState(name);
@@ -19,7 +25,7 @@ const NewUserModal = () => {
     };
 
     const handleOk = () => {
-        // TODO: implement this
+        addNewFollower(name, name, headline, 'https://picsum.photos/200/200', followers);
         setPrevName(name);
         setPrevHeadline(headline);
         setIsModalVisible(false);

@@ -3,16 +3,9 @@
 ### TODO:
 
 #### By Steps:
-- Learn Global State
-- Use Global State to store: Logged-in User, Followers, Posts
-- Using Global State populate Main from LogIn:
-    - Logged-in User Info
-    - Followers
-    - Posts
 - Implement Add New Follower using Global State
 - Implement Remove Follower using Global State
 - Implement Search using Global State
-- Clear Global State on LogOut
 - Fix Date of Birth validation on Registration
 - Hardcode Global State values for when user logs in as New User
 - Construct Profile Page
@@ -21,7 +14,7 @@
 
 
 #### Main:
-- Show all 10 articles for each user, at least the first three have images. There should initially be 10 registered users
+
 - A search box, that filters the displayed articles by text or author, but not date or article id
 - The username and profile picture are shown. The profile picture can be hard coded.
 - The user's status headline is shown. The initial status headline is their company's catch phrase.

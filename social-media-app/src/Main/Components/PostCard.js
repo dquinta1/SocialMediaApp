@@ -22,7 +22,7 @@ function PostCard(title, description, author, timestamp, src) {
                     {author}
                 </Text>
                 <Text>
-                    {timestamp}
+                    {new Date(timestamp).toLocaleDateString("en-US")}
                 </Text>
             </Space>
         </Card>

@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useState as useHookState } from "@hookstate/core";
+import store from "../../DB/store";
 import { Space, Avatar, Typography, Button } from "antd";
+import { removeFollower } from "../../DB/utils/store-utils";
 import { 
     UserOutlined,
     CloseCircleOutlined
 } from '@ant-design/icons'; 
+import { useEffect } from "react";
 
 const { Text } = Typography;
 
-function FollowerListItem(name, status, src) {
+function FollowerListItem(id, name, status, src) {
 
-    const removeFollower = () => {
-        //TODO: implement this
+    // const { followers } = useHookState(store);
+
+    // let followersCopy = [...followers.get()]
+
+    const removeMyself = () => {
+        // removeFollower(id, followers);
+        // onChange(id);
     }
 
     return (
@@ -25,7 +33,7 @@ function FollowerListItem(name, status, src) {
                 </Text>
             </Space>
             <Button size='small' type='link' icon={<CloseCircleOutlined />} style={{color:'rgba(255, 50, 50, 0.8)' }} 
-                onClick={ removeFollower }
+                onClick={ removeMyself }
             />
         </Space>
     );

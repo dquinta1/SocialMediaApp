@@ -1,33 +1,39 @@
+import store from '../DB/store';
 import React, { useEffect, useState } from 'react'
+import { useState as useHookState } from '@hookstate/core';
 import auth from '../Auth/utils/auth'
 import AccountFragment from './Components/AccountFragment';
-import FollowerListItem from './Components/FollowerListItem';
-import PostCard from './Components/PostCard';
 import NewPostModal from './Components/NewPostModal';
 import NewUserModal from './Components/NewUserModal';
-import MockDB from '../DB/MockDB';
 import { Button, Layout, Space, List, Input} from 'antd';
+import loadFollowers from './utils/loadFollowers';
+import loadPosts from './utils/loadPosts';
+import { clearStore, removeFollower } from '../DB/utils/store-utils';
+import FollowerListWrapper from './Components/FollowerListWrapper';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Search } = Input;
 
-const loremTitle = 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit';
-const loremDescription = "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto";
-const loremPic = 'https://picsum.photos/200/200';
-
 const MainPage = ({ history }) => {
 
-    let db = MockDB();
+    const { user, followers, posts } = useHookState(store);
 
-    
+    // const [idToRemove, setToRemove] = useState('');
+
+    // useEffect(() => {
+    //     removeFollower(idToRemove, followers);
+    //     setToRemove('');
+    // }, [idToRemove]);
 
     const onSearch = (value) => {
         // TODO: implement this
         console.log(value);
+        removeFollower(1, followers);
     }
 
     const logout = () => {
         auth.logout( () => {
+            clearStore( user, followers, posts );
             history.replace('/');
         })
     }
@@ -45,18 +51,14 @@ const MainPage = ({ history }) => {
                         {AccountFragment()}
                     </div>
                     <List itemLayout='vertical' split={false}>
-                        <List.Item>
-                            { FollowerListItem('Follower Name', 'Headline', loremPic) }
-                        </List.Item>
-                        <List.Item>
-                            { FollowerListItem('Follower Name', 'Headline', loremPic) }
-                        </List.Item>
-                        <List.Item>
-                            { FollowerListItem('Follower Name', 'Headline', loremPic) }
-                        </List.Item>
-                        <List.Item>
+
+                        {/* <FollowerListWrapper /> */}
+                        { FollowerListWrapper(followers) }
+
+                        <List.Item key='new-user-modal'>
                             <NewUserModal />
                         </List.Item>
+
                     </List>
                     <Button type='primary' danger id='btn-logout' className="btn-logout" 
                             onClick= { logout }
@@ -66,27 +68,18 @@ const MainPage = ({ history }) => {
                     </Button>
                 </Sider>
                 <Layout className="main-layout" style={{ marginLeft: 200 }}>
+
                     <Header className="main-layout-background" style={{ padding: 15 }}>
                         <Space align='end' style={{position: 'absolute', right: '10px'}}>
                             <Search placeholder="search posts..." onSearch={onSearch} style={{ width: 200 }} />
                         </Space>
                     </Header>
+
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <Space direction='vertical' >
                             <NewPostModal />
                             <List itemLayout='vertical'>
-                                <List.Item>
-                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
-                                </List.Item>
-                                <List.Item>
-                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
-                                </List.Item>
-                                <List.Item>
-                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
-                                </List.Item>
-                                <List.Item>
-                                    { PostCard(loremTitle, loremDescription, 'author', '00:00', loremPic) }
-                                </List.Item>
+                                { loadPosts(posts) }
                             </List>
                         </Space>
                     </Content>

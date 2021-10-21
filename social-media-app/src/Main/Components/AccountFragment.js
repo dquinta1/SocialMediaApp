@@ -1,15 +1,22 @@
 import { useState } from "react";
+import { useState as useHookState } from "@hookstate/core";
 import { Space, Avatar, Button, Typography, Modal, Input } from "antd";
 import { UserOutlined } from '@ant-design/icons';
+import store from "../../DB/store";
 
 const { Text } = Typography;
 const { TextArea } = Input;
-const loremPic = 'https://picsum.photos/200/200';
 
 function AccountFragment() {
 
+    const { user } = useHookState(store);
+
+    const username = user.get()['username'];
+    let headline = user.get()['headline'];
+    const src = user.get()['src'];
+
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [status, setStatus] = useState('Headline');
+    const [status, setStatus] = useState(headline);
     const [prevStatus, setPrevStatus] = useState(status);
 
     const showModal = () => {
@@ -29,9 +36,9 @@ function AccountFragment() {
     return (
         <Space direction='vertical' style={{ paddingTop: '8px' }}>
             <Space size={25}>
-                <Avatar className='avatar' id='avatar-profile' size={55} icon={<UserOutlined />} src={ loremPic } />
+                <Avatar className='avatar' id='avatar-profile' size={55} icon={<UserOutlined />} src={ src } />
                 <Space align='center' size={0} direction='vertical' style={{ fontSize: '14px', color: '#fff' }}>
-                    <p style={{ lineHeight: '0px' }} id='avatar-username'>Username</p>
+                    <p style={{ lineHeight: '0px' }} id='avatar-username'>{ username }</p>
                     <Button type='link' className='profile-btn' id='btn-profile' href='/profile' style={{ fontSize: '12px', top: '-5px' }}>
                         Profile
                     </Button>
