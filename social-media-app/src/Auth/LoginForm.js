@@ -6,7 +6,6 @@ const LoginForm = (login, signUp) => {
 
     return (
         <>
-    
             <Form name="normal_login"
                 className="login-form"
                 style={{width:'300px'}}>

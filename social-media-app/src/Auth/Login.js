@@ -10,10 +10,6 @@ import LoginForm from './LoginForm';
 const { Header, Content } = Layout;
 
 const Login = ({ history }) => {
-
-    var store = require('store');
-    store.clearAll();
-
     const { posts } = useHookState(store); 
     const db = MockDB();
 
