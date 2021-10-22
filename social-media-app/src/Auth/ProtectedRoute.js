@@ -1,61 +1,22 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
-import auth from './utils/auth';
 
-const ProtectedRoute = ({children, ...rest}) => {
-
-    // let test = <Route {...rest} render={children} />;
-    // let redi = <Redirect to={{
-    //                     pathname: '/'
-    //                 }} />;
+const ProtectedRoute = ({component: Component, ...rest}) => {
+    var store = require('store');
 
     return (
-        <Route
-         {...rest} 
-         render= {
-             ({ location }) => auth.isAuthenticated ? 
-             (children) : 
-             (
-                 <Redirect 
-                    to={{
-                        pathname: '/',
-                        state: { from: location }
+        <Route {...rest} 
+         render= { (props) => 
+            (store.get('user')) 
+                ? <Component {...props} /> 
+                : <Redirect to={{
+                    path: '/',
+                    state: { from: props.location }
                     }}
-                />
-             )
-         }
+                />     
+            }
          />
-
-        // (auth.isAuthenticated() ? test : redi)
     )
 }
-
-// const ProtectedRoute = ({
-//     component: Component,
-//     ...rest
-//   }) => {
-//     return (
-//       <Route
-//         {...rest}
-//         render={props => {
-//           if (auth.isAuthenticated()) {
-//             return <Component {...props} />;
-//           } else {
-//             return (
-//               <Redirect
-//                 to={{
-//                   pathname: "/",
-//                   state: {
-//                     from: props.location
-//                   }
-//                 }}
-//               />
-//             );
-//           }
-//         }}
-//       />
-//     );
-//   };
-  
 
 export default ProtectedRoute;

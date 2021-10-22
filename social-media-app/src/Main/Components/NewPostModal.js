@@ -4,10 +4,11 @@ import {
     PlusOutlined,
     FileImageOutlined
 } from '@ant-design/icons';
+import { addNewPost } from '../../DB/utils/store-utils';
 
 const { TextArea } = Input;
 
-function NewPostModal() {
+function NewPostModal( setChange ) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [title, setTitle] = useState('New Post');
     const [prevTitle, setPrevTitle] = useState(title);
@@ -19,14 +20,14 @@ function NewPostModal() {
     };
 
     const handleOk = () => {
-        // TODO: remove next two lines and implement proper functionality
-        setTitle(prevTitle);
-        setDescription(prevDescription);
+        var store = require('store');
+        let author = store.get('user');
+        console.log(author);
 
-        // TODO: uncomment next two lines when previous TODO is resolved
-        // setPrevTitle(title);
-        // setPrevDescription(description);
-
+        addNewPost(title, description, author['name'], 'https://picsum.photos/1000/1000')
+        setPrevTitle(title);
+        setPrevDescription(description);
+        setChange(true);
         setIsModalVisible(false);
     };
 

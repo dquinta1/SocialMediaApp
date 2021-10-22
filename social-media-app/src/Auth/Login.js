@@ -28,17 +28,7 @@ const Login = ({ history }) => {
 
                     loadUser(username.value, data);
                     loadFollowers(data[username.value]['id'], id_data);
-
-                    var store = require('store');
-                    let user = store.get('user');
-                    let followers = store.get('followers');
-
-                    let ids = [user['id']];
-                    for (let index = 0; index < followers.length; index++) {
-                        const element = followers[index];
-                        ids.push(element['id'])
-                    }
-                    loadPosts(ids, posts, postsData, id_data);
+                    loadPosts(postsData, id_data);
 
                     history.push('/main');
                     message = '';

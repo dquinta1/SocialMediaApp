@@ -4,6 +4,7 @@ import SignUpForm from './Auth/SignUpForm';
 import MainPage from './Main/MainPage';
 import ProfilePage from './Profile/ProfilePage';
 import ProtectedRoute from './Auth/ProtectedRoute';
+import AuthRedirect from './Auth/AuthRedirect';
 
 import { 
   BrowserRouter as Router,

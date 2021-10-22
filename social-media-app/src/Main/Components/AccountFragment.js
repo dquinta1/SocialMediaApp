@@ -7,6 +7,8 @@ const { TextArea } = Input;
 
 function AccountFragment() {
 
+    console.log('Account Fragment rendered');
+
     var store = require('store');
     let user = store.get('user');
     let username = user['username'];

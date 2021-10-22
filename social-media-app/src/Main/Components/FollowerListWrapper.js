@@ -8,6 +8,8 @@ import NewUserModal from './NewUserModal';
 
 const FollowerListWrapper = () => {
 
+    console.log('Followers List rendered');
+
     // using localStorage
     var store = require('store');
 

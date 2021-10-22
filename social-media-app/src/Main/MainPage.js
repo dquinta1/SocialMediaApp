@@ -13,6 +13,7 @@ import FollowerListWrapper from './Components/FollowerListWrapper';
 import PostListWrapper from './Components/PostListWrapper';
 import { loadPosts as loadGlobalPosts } from '../DB/utils/store-utils';
 import MockDB from '../DB/MockDB';
+import { filterPosts } from '../DB/utils/store-utils';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Search } = Input;
@@ -20,6 +21,12 @@ const { Search } = Input;
 const MainPage = ({ history }) => {
 
     const { user, followers, posts } = useHookState(store);
+
+    const [change, setChange] = useState(false);
+
+    useEffect(() => {
+        setChange(false);
+    }, [change]);
 
     // const db = MockDB();
     // let posts_data = db.posts.data;
@@ -39,9 +46,9 @@ const MainPage = ({ history }) => {
     //     loadGlobalPosts(ids, posts, posts_data, id_data);
     // }, []);
 
-    const onSearch = (value) => {
-        // TODO: implement this
-        console.log(value);
+    const onSearch = (value) => { // TODO: this filters properly but does not rerender
+        filterPosts(value);
+        setChange(true);
     }
 
     const logout = () => {
@@ -78,18 +85,14 @@ const MainPage = ({ history }) => {
                 <Layout className="main-layout" style={{ marginLeft: 200 }}>
 
                     <Header className="main-layout-background" style={{ padding: 15 }}>
-                        <Space align='end' style={{position: 'absolute', right: '10px'}}>
+                        <Space align='end' style={{display:'flex', justifyContent:'end'}}>
                             <Search placeholder="search posts..." onSearch={onSearch} style={{ width: 200 }} />
                         </Space>
                     </Header>
 
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <Space direction='vertical' >
-                            <NewPostModal />
-                            <List itemLayout='vertical'>
-                                { loadPosts(posts) }
-                                {/* <PostListWrapper /> */}
-                            </List>
+                            <PostListWrapper />
                         </Space>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Something interesting at the end of the page</Footer>
