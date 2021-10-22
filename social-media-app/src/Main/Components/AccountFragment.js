@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { useState as useHookState } from "@hookstate/core";
 import { Space, Avatar, Button, Typography, Modal, Input } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import store from "../../DB/store";
 
 const { Text } = Typography;
 const { TextArea } = Input;
 
 function AccountFragment() {
 
-    const { user } = useHookState(store);
-
-    const username = user.get()['username'];
-    let headline = user.get()['headline'];
-    const src = user.get()['src'];
+    var store = require('store');
+    let user = store.get('user');
+    let username = user['username'];
+    let headline = user['headline'];
+    let src = user['src'];
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [status, setStatus] = useState(headline);

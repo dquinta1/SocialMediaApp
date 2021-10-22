@@ -1,3 +1,5 @@
+var store = require('store');
+
 class Auth {
     constructor() {
       this.authenticated = false;

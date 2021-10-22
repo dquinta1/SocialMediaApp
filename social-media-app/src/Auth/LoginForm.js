@@ -1,77 +1,60 @@
-import React from 'react';
-import auth from './utils/auth';
-import MockDB from '../DB/MockDB';
-import { Button } from 'antd';
-import { loadFollowers, loadPosts, loadUser } from '../DB/utils/store-utils';
-import { useState as useHookState } from '@hookstate/core';
-import store from '../DB/store';
+import React from 'react'
+import { Form, Space, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const LoginForm = ({ history }) => {
-
-    const { user, followers, posts} = useHookState(store); 
-
-    let db = MockDB();
-    let username = document.getElementById('username');
-    let password = document.getElementById('password');
-
-    let login = () => {
-        auth.login(() => {
-            let data = db.users.data;
-            let iDs = db.iDs.data;
-            let postsData = db.posts.data;
-            let message = 'Invalid credentials';
-
-            if (username.value in data) {
-                if (data[username.value]['address']['street'] === password.value) {
-
-                    loadUser(username.value, user, data);
-                    loadFollowers(data[username.value]['id'], followers, iDs);
-
-                    let ids = [user.get()['id']];
-                    for (let index = 0; index < followers.get().length; index++) {
-                        const element = followers.get()[index];
-                        ids.push(element['id'])
-                    }
-                    loadPosts(ids, posts, postsData, iDs);
-
-                    history.push('/main');
-                    message = '';
-                }
-            }
-            document.getElementById('auth-error-message').innerText = message;
-        });
-    };
-
-    let signUp = () => {
-        history.push('/signup');
-    }
+const LoginForm = (login, signUp) => {
 
     return (
-        <div>
-            <h1>Landing Page</h1>
+        <>
+    
+            <Form name="normal_login"
+                className="login-form"
+                style={{width:'300px'}}>
 
-            <div className="input-div">
-                <label htmlFor="useraname">Username: </label>
-                <input type="text" id='username' className="form-input"/>
-            </div>
+                <Form.Item 
+                    name="username"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Username!',
+                    },
+                    ]}
+                >
+                    <Input id='username' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                </Form.Item>
 
-            <div className="input-div">
-                <label htmlFor="password">Password: </label>
-                <input type="password" id='password' className="form-input"/>
-            </div>
+                <Form.Item
+                    name="password"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Password!',
+                    },
+                    ]}
+                >
+                    <Input id='password'
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                    />
+                </Form.Item>
 
-            <div className="input-div">
-                <Button id='btn-login' className="login-btn" onClick= { login }>
-                    Log In
-                </Button>
-                <Button type='primary' className="signup-btn" onClick= { signUp }>
-                    Sign Up
-                </Button>
-            </div>
+                <Form.Item>
+                    <Space>
+                        <Button type='primary' onClick={ login }>
+                            Log in
+                        </Button>
+                        <Button type='default' className="signup-btn" onClick= { signUp }>
+                            Sign Up
+                        </Button>
+                    </Space>
+                </Form.Item>
+
+            </Form>
 
             <div id='auth-error-message' className="auth-error-message"></div>
-        </div>
+        </>
     )
 }
 
-export default LoginForm
+export default LoginForm;

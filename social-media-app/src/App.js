@@ -1,5 +1,5 @@
 import './App.css';
-import LoginForm from './Auth/LoginForm';
+import Login from './Auth/Login';
 import SignUpForm from './Auth/SignUpForm';
 import MainPage from './Main/MainPage';
 import ProfilePage from './Profile/ProfilePage';
@@ -16,11 +16,11 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path='/' component={ LoginForm } />
-          <Route exact path='/login' component={ LoginForm } />
+          <Route exact path='/' component={ Login } />
+          <Route exact path='/login' component={ Login } />
           <Route exact path='/signup' component={ SignUpForm } />
-          <Route exact path='/main' component={ MainPage } /> {/*Change Route to ProtectedRoute when done*/} 
-          <Route exact path='/profile' component={ ProfilePage } /> {/*Change Route to ProtectedRoute when done*/} 
+          <ProtectedRoute exact path='/main' component={ MainPage } /> 
+          <ProtectedRoute exact path='/profile' component={ ProfilePage } /> 
           <Route path="*" component={() => "404 NOT FOUND"} />
         </Switch>
       </Router>

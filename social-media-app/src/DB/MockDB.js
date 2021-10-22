@@ -47,7 +47,7 @@ function MockDB() {
 
         });
 
-      }, [users, iDs, posts]);
+      }, []);
 
     return {
         users,

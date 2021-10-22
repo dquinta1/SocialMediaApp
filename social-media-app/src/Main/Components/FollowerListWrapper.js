@@ -4,26 +4,34 @@ import store from '../../DB/store'
 import { List } from 'antd'
 import FollowerListItem from '../Components/FollowerListItem';
 import { removeFollower } from '../../DB/utils/store-utils';
+import NewUserModal from './NewUserModal';
 
-const FollowerListWrapper = (followers) => {
+const FollowerListWrapper = () => {
 
-    let followerList = [...followers.get()];
+    // using localStorage
+    var store = require('store');
 
-    // const [idToRemove, setToRemove] = useState('');
+    const [followerList, setFollowerList] = useState(store.get('followers'));
+    const [idToRemove, setToRemove] = useState('');
+    const [change, setChange] = useState(false);
 
-    // useEffect(() => {
-    //     onChange(idToRemove);
-    //     setToRemove('');
-    // }, [idToRemove]);
-
-    // let followerList = [...followers.get()];
+    useEffect(() => {
+        removeFollower(idToRemove);
+        setFollowerList(store.get('followers'));
+        setChange(false)
+    }, [idToRemove, change]);
 
     return (
-        followerList.map( (element) => (
-            <List.Item key={element.id} >
-                { FollowerListItem(element.id, element.name, element.headline, element.src) }
+        <>
+            { followerList.map( (element) => (
+                <List.Item key={element.id} >
+                    { FollowerListItem(element.id, element.name, element.headline, element.src, setToRemove) }
+                </List.Item>
+            ) ) }
+            <List.Item key='new-user-modal'>
+                { NewUserModal(setChange) }
             </List.Item>
-        ) )
+        </>
     )
 }
 

@@ -10,6 +10,9 @@ import loadFollowers from './utils/loadFollowers';
 import loadPosts from './utils/loadPosts';
 import { clearStore, removeFollower } from '../DB/utils/store-utils';
 import FollowerListWrapper from './Components/FollowerListWrapper';
+import PostListWrapper from './Components/PostListWrapper';
+import { loadPosts as loadGlobalPosts } from '../DB/utils/store-utils';
+import MockDB from '../DB/MockDB';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Search } = Input;
@@ -18,17 +21,27 @@ const MainPage = ({ history }) => {
 
     const { user, followers, posts } = useHookState(store);
 
-    // const [idToRemove, setToRemove] = useState('');
+    // const db = MockDB();
+    // let posts_data = db.posts.data;
+    // let id_data = db.iDs.data;
 
     // useEffect(() => {
-    //     removeFollower(idToRemove, followers);
-    //     setToRemove('');
-    // }, [idToRemove]);
+    //     var store = require('store');
+    //     let user = store.get('user');
+    //     let followers = store.get('followers');
+    //     let ids = [user['id']];
+
+    //     for (let index = 0; index < followers.length; index++) {
+    //         const element = followers[index];
+    //         ids.push(element['id'])
+    //     }
+
+    //     loadGlobalPosts(ids, posts, posts_data, id_data);
+    // }, []);
 
     const onSearch = (value) => {
         // TODO: implement this
         console.log(value);
-        removeFollower(1, followers);
     }
 
     const logout = () => {
@@ -48,16 +61,11 @@ const MainPage = ({ history }) => {
                         left: 0,
                     }}>
                     <div className="logo">
-                        {AccountFragment()}
+                        <AccountFragment/>
                     </div>
                     <List itemLayout='vertical' split={false}>
 
-                        {/* <FollowerListWrapper /> */}
-                        { FollowerListWrapper(followers) }
-
-                        <List.Item key='new-user-modal'>
-                            <NewUserModal />
-                        </List.Item>
+                        <FollowerListWrapper/>
 
                     </List>
                     <Button type='primary' danger id='btn-logout' className="btn-logout" 
@@ -80,6 +88,7 @@ const MainPage = ({ history }) => {
                             <NewPostModal />
                             <List itemLayout='vertical'>
                                 { loadPosts(posts) }
+                                {/* <PostListWrapper /> */}
                             </List>
                         </Space>
                     </Content>

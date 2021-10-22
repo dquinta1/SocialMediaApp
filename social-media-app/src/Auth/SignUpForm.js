@@ -1,74 +1,234 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { Form, Input, Button, DatePicker } from 'antd';
+import auth from './utils/auth';
+import { addNewUser } from '../DB/utils/store-utils';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-const schema = yup.object().shape({
-    userName: yup.string().trim().matches(/^([a-z]|[A-Z])+([a-z]|[A-Z]|\d)*$/, 
-    'username may only contain letters and numbers and may only begin with a letter').required('No username provided'),
-    firstName: yup.string(),
-    lastName: yup.string(),
-    email: yup.string().trim().email().required('No email provided'),
-    phone: yup.string().trim().matches(phoneRegExp,
-     "Phone number does not match pattern: 123-456-7890").required('No phone number provided'),
-    dob: yup.date().typeError('This field must be in the form of mm/dd/yyyy or mm-dd-yyyy').required('No date of birth provided'),
-    zipcode: yup.string().trim().matches(/^[0-9]{5}(?:-[0-9]{4})?$/,
-     'Zipcode does not match pattern: 77005').required('No zipcode provided'),
-    password: yup.string().trim().min(8, 'Password must be at least 8 characters').required('No password provided'),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
-});
-
 const SignUpForm = ({ history }) => {
-    const { register, handleSubmit, formState:{ errors } } = useForm({
-        resolver: yupResolver(schema),
-    });
 
-    const onSubmit = (data) => {
-        // TODO: store data into server  
-        console.log(data)
+    const [form] = Form.useForm();
+
+    const onFinish = (values) => {
+
+        //TODO: store new user info on server
+
+        auth.login(() => {
+            addNewUser(values.username, '');
+        })
         history.push('/main');
     };
 
+    const formItemLayout = {
+        labelCol: {
+          xs: {
+            span: 14,
+          },
+          sm: {
+            span: 8,
+          },
+        },
+        wrapperCol: {
+          xs: {
+            span: 14,
+          },
+          sm: {
+            span: 8,
+          },
+        },
+      };
+
     return (
         
-        <div className="sign-up-div">
-
+        <>
             <h1 className="signup-header">Sign Up</h1>
-            <form onSubmit={ handleSubmit(onSubmit) } className="signup-form">
+            
+            <Form {...formItemLayout}
+                form={form}
+                name="register"
+                onFinish={onFinish}
+                scrollToFirstError
+                >
 
-                <input className="form-input" {...register('userName')} placeholder="Username"/>
-                <p>{ errors.userName?.message }</p>
+                <Form.Item
+                    name="username"
+                    label="Username"
+                    rules={[
+                    {
+                        type: 'string',
+                        pattern: /^([a-z]|[A-Z])+([a-z]|[A-Z]|\d)*$/,
+                        message: 'Username may only contain letters and\n numbers and may only begin with a letter!',
+                    },
+                    {
+                        required: true,
+                        message: 'This field is required',
+                    },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-                <input className="form-input" {...register('firstName')} placeholder="First Name"/>
-                <p>{ errors.firstName?.message }</p>
+                <Form.Item
+                    name="name"
+                    label="Name"
+                >
+                    <Input />
+                </Form.Item>
 
-                <input className="form-input" {...register('lastName')} placeholder="Last Name"/>
-                <p>{ errors.lastName?.message }</p>
+                <Form.Item
+                    name="email"
+                    label="E-mail"
+                    rules={[
+                    {
+                        type: 'email',
+                        message: 'Thist is not a valid E-mail!',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your E-mail!',
+                    },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-                <input className="form-input" {...register('email')} placeholder="Email"/>
-                <p>{ errors.email?.message }</p>
+                <Form.Item
+                    name="phone"
+                    label="Phone"
+                    rules={[
+                    {
+                        type: 'string',
+                        pattern: phoneRegExp,
+                        message: 'Phone number does not match pattern: 123-456-7890',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your phone number',
+                    },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-                <input className="form-input" {...register('phone')} placeholder="Phone"/>
-                <p>{ errors.phone?.message }</p>
+                <Form.Item
+                    name="dateOfBirth"
+                    label="Date of Birth"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'This field is required',
+                    },
+                    () => ({
+                        validator(_, value) {
+                          if (isUnderage(value)) {
+                            return Promise.reject(new Error('Only users who are 18 or older may'));
+                        }
+                          return Promise.resolve();
+                        },
+                      })
+                    ]}
+                >
+                    <DatePicker />
+                </Form.Item>
 
-                <input className="form-input" {...register('dob')} placeholder="Date of Birth"/>
-                <p>{ errors.dob?.message }</p>
+                <Form.Item
+                    name="zipcode"
+                    label="Zipcode"
+                    rules={[
+                    {
+                        type: 'string',
+                        pattern: /^[0-9]{5}(?:-[0-9]{4})?$/,
+                        message: 'Zipcode does not match pattern: 77005',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your phone Zipcode',
+                    },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-                <input className="form-input" {...register('zipcode')} placeholder="Zipcode"/>
-                <p>{ errors.zipcode?.message }</p>
+                <Form.Item
+                    name="password"
+                    label="Password"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password />
+                </Form.Item>
 
-                <input type='password' className="form-input" {...register('password')} placeholder="Password"/>
-                <p>{ errors.password?.message }</p>
+                <Form.Item
+                    name="confirm"
+                    label="Confirm Password"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please confirm your password!',
+                    },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                        }
 
-                <input type='password' className="form-input" {...register('confirmPassword')} placeholder="Confirm Password"/>
-                <p>{ errors.confirmPassword && 'Passwords do not match' }</p>
+                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                        },
+                    }),
+                    ]}
+                >
+                    <Input.Password />
+                </Form.Item>
 
-                <input type="submit"/>
-            </form>
-        </div>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Register
+                    </Button>
+                </Form.Item>
+
+            </Form>
+
+        </>
     )
+
+    function isUnderage(value) {
+
+        // calculate age of user
+        let today = new Date();
+        let age = value.toDate();
+        let year = age.getFullYear();
+        let month = age.getMonth();
+        let day = age.getDate() + 1;  // ** browser kept showing the day as 1 less than supposed to ** //
+
+        // checks if user's age is 18 years or younger
+        if (today.getFullYear() - year < 18){
+            return true;
+            //errorElement.innerText = "Only individuals who are 18 years of age or older are allowed to register";
+        }
+
+        // check for month difference
+        else if (today.getMonth() - month < 0) {
+            return true;
+            //errorElement.innerText = "Only individuals who are 18 years of age or older are allowed to register";
+        }
+
+        // check for day difference
+        else if (today.getDate() - day < 0) {
+            return true;
+            //errorElement.innerText = "Only individuals who are 18 years of age or older are allowed to register";
+        }
+
+        else {
+            return false;
+        }
+    }
 }
 
 export default SignUpForm

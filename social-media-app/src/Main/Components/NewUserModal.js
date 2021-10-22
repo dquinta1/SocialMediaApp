@@ -10,24 +10,29 @@ import { addNewFollower } from '../../DB/utils/store-utils';
 
 const { TextArea } = Input;
 
-const NewUserModal = () => {
+const NewUserModal = (setChange) => {
 
     const { followers } = useHookState(store);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [name, setName] = useState('New Follower');
+    const [name, setName] = useState('');
     const [prevName, setPrevName] = useState(name);
-    const [headline, setHeadline] = useState('Headline');
+    const [headline, setHeadline] = useState('');
     const [prevHeadline, setPrevHeadline] = useState(headline);
 
     const showModal = () => {
         setIsModalVisible(true);
+        // document.getElementById('add-new-follower-title').value = '';
+        // document.getElementById('add-new-follower-headline').value = '';
     };
 
     const handleOk = () => {
-        addNewFollower(name, name, headline, 'https://picsum.photos/200/200', followers);
-        setPrevName(name);
-        setPrevHeadline(headline);
+        if ( name !== '' &&  headline !== ''){
+            addNewFollower(name, name, headline, 'https://picsum.photos/200/200');
+            setPrevName(name);
+            setPrevHeadline(headline);
+            setChange(true);
+        }
         setIsModalVisible(false);
     };
 
@@ -58,8 +63,8 @@ const NewUserModal = () => {
                 </div>
             ]}
         >
-            <TextArea rows={1} placeholder='Name' onChange={ (e) => { setName(e.target.value) } }/> 
-            <TextArea rows={1} placeholder='Headline' onChange={ (e) => { setHeadline(e.target.value) } }/>
+            <TextArea id='add-new-follower-title' rows={1} placeholder='Name' onChange={ (e) => { setName(e.target.value) } }/> 
+            <TextArea id='add-new-follower-headline' rows={1} placeholder='Headline' onChange={ (e) => { setHeadline(e.target.value) } }/>
         </Modal>
         </>
     );

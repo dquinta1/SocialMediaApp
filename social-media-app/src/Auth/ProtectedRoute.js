@@ -1,14 +1,20 @@
-import React from 'react'
-import { Redirect, Route } from 'react-router'
+import React from 'react';
+import { Redirect, Route } from 'react-router';
 import auth from './utils/auth';
 
 const ProtectedRoute = ({children, ...rest}) => {
+
+    // let test = <Route {...rest} render={children} />;
+    // let redi = <Redirect to={{
+    //                     pathname: '/'
+    //                 }} />;
+
     return (
         <Route
          {...rest} 
          render= {
              ({ location }) => auth.isAuthenticated ? 
-             children : 
+             (children) : 
              (
                  <Redirect 
                     to={{
@@ -19,6 +25,8 @@ const ProtectedRoute = ({children, ...rest}) => {
              )
          }
          />
+
+        // (auth.isAuthenticated() ? test : redi)
     )
 }
 
@@ -50,4 +58,4 @@ const ProtectedRoute = ({children, ...rest}) => {
 //   };
   
 
-export default ProtectedRoute
+export default ProtectedRoute;

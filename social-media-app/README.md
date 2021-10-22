@@ -4,14 +4,13 @@
 
 #### By Steps:
 - Implement Add New Follower using Global State
-- Implement Remove Follower using Global State
+- Implement Add New Article to Feed
 - Implement Search using Global State
 - Fix Date of Birth validation on Registration
 - Hardcode Global State values for when user logs in as New User
 - Construct Profile Page
 - Update Global State on Profile Update
 - Beautify
-
 
 #### Main:
 

@@ -6,19 +6,13 @@ import {
     UserOutlined,
     CloseCircleOutlined
 } from '@ant-design/icons'; 
-import { useEffect } from "react";
 
 const { Text } = Typography;
 
-function FollowerListItem(id, name, status, src) {
-
-    // const { followers } = useHookState(store);
-
-    // let followersCopy = [...followers.get()]
+function FollowerListItem(id, name, status, src, setToRemove) {
 
     const removeMyself = () => {
-        // removeFollower(id, followers);
-        // onChange(id);
+        setToRemove(id);
     }
 
     return (
