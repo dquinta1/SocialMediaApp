@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Space, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const LoginForm = (login, signUp) => {
+const LoginForm = ({login, history}) => {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const clickToLogin = () => {
+        console.log('username', username);
+        console.log('password', password);
+        login(username, password);
+    }
+
+    const goToSignUp = () => {
+        history.push('/signup');
+    };
 
     return (
         <>
@@ -19,7 +32,10 @@ const LoginForm = (login, signUp) => {
                     },
                     ]}
                 >
-                    <Input id='username' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    <Input id='username' prefix={<UserOutlined className="site-form-item-icon" />} 
+                        value={ username } onChange={ (e) => { setUsername(e.target.value) } } 
+                        placeholder="Username" 
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -34,24 +50,23 @@ const LoginForm = (login, signUp) => {
                     <Input id='password'
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     type="password"
+                    value={ password }
+                    onChange={ (e) => { setPassword(e.target.value) } }
                     placeholder="Password"
                     />
                 </Form.Item>
 
                 <Form.Item>
                     <Space>
-                        <Button type='primary' onClick={ login }>
+                        <Button type='primary' onClick={ clickToLogin }>
                             Log in
                         </Button>
-                        <Button type='default' className="signup-btn" onClick= { signUp }>
+                        <Button type='default' className="signup-btn" onClick= { goToSignUp }>
                             Sign Up
                         </Button>
                     </Space>
                 </Form.Item>
-
             </Form>
-
-            <div id='auth-error-message' className="auth-error-message"></div>
         </>
     )
 }

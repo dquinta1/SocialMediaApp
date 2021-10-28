@@ -1,41 +1,47 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import FeedContext from '../../Context/feed-context';
 import { Button, Modal, Input, Upload } from 'antd';
 import { 
     PlusOutlined,
     FileImageOutlined
 } from '@ant-design/icons';
-import { addNewPost } from '../../DB/utils/store-utils';
 
 const { TextArea } = Input;
 
-function NewPostModal( setChange ) {
+function NewPostModal() {
+
+    const { user, addPosts } = useContext(FeedContext);
+
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [title, setTitle] = useState('New Post');
-    const [prevTitle, setPrevTitle] = useState(title);
     const [description, setDescription] = useState('');
-    const [prevDescription, setPrevDescription] = useState(description);
-
+    
     const showModal = () => {
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
-        var store = require('store');
-        let author = store.get('user');
-        console.log(author);
-
-        addNewPost(title, description, author['name'], 'https://picsum.photos/1000/1000')
-        setPrevTitle(title);
-        setPrevDescription(description);
-        setChange(true);
+        if ( (title !== '' && title !== 'New Post') &&  description !== ''){
+            // format new post
+            const newPost = {
+                title: title,
+                description: description,
+                author: user.name,
+                timestamp: Date.now(),
+                id: Math.random(),
+                src: 'https://picsum.photos/1000/1000',
+                comments: [],
+            }
+            addPosts(newPost);
+            setTitle('New Post');
+            setDescription('');
+        }
         setIsModalVisible(false);
     };
 
     const handleCancel = () => {
-        setTitle(prevTitle);
-        setDescription(prevDescription);
-        document.getElementById('new-post-modal-textArea-title').value = '';
-        document.getElementById('new-post-modal-textArea-description').value = '';
+        setTitle('New Post');
+        setDescription('');
         setIsModalVisible(false);
     };
 
@@ -63,8 +69,8 @@ function NewPostModal( setChange ) {
                 </div>
             ]}
         >
-            <TextArea id='new-post-modal-textArea-title' rows={1} placeholder='Title' onChange={ (e) => { setTitle(e.target.value) } }/> 
-            <TextArea id='new-post-modal-textArea-description' rows={4} placeholder='Description...' onChange={ (e) => { setDescription(e.target.value) } }/>
+            <TextArea id='new-post-modal-textArea-title' rows={1} placeholder='Title' value={ title } onChange={ (e) => { setTitle(e.target.value) } }/> 
+            <TextArea id='new-post-modal-textArea-description' rows={4} placeholder='Description...' value={ description } onChange={ (e) => { setDescription(e.target.value) } }/>
         </Modal>
         </>
     );

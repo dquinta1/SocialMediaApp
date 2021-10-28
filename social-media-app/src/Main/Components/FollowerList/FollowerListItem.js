@@ -1,7 +1,4 @@
-import { useState as useHookState } from "@hookstate/core";
-import store from "../../DB/store";
 import { Space, Avatar, Typography, Button } from "antd";
-import { removeFollower } from "../../DB/utils/store-utils";
 import { 
     UserOutlined,
     CloseCircleOutlined
@@ -9,11 +6,9 @@ import {
 
 const { Text } = Typography;
 
-function FollowerListItem(id, name, status, src, setToRemove) {
+function FollowerListItem({name, status, src, clickToRemove}) {
 
-    const removeMyself = () => {
-        setToRemove(id);
-    }
+    console.log('Follower Item Rendered');
 
     return (
         <Space size='small' align='center' style={{color: 'white'}}>
@@ -27,7 +22,7 @@ function FollowerListItem(id, name, status, src, setToRemove) {
                 </Text>
             </Space>
             <Button size='small' type='link' icon={<CloseCircleOutlined />} style={{color:'rgba(255, 50, 50, 0.8)' }} 
-                onClick={ removeMyself }
+                onClick={ clickToRemove }
             />
         </Space>
     );

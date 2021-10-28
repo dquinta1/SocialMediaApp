@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import AuthContext from '../Auth-Context/AuthContext';
 import { Form, Input, Button, DatePicker } from 'antd';
-import auth from './utils/auth';
-import { addNewUser } from '../DB/utils/store-utils';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -9,14 +8,40 @@ const SignUpForm = ({ history }) => {
 
     const [form] = Form.useForm();
 
+    const { auth, signUpWithUsernameAndPassword } = useContext(AuthContext);
+
+    const [message, setMessage] = useState('');
+
+    // if user is already authorized then redirect to main page
+    useEffect(() => {
+        if(auth.token) {
+            history.push('/main');
+        };
+    }, []);
+
     const onFinish = (values) => {
+        // create new user object
+        const newUser = {
+            username: values.username,
+            name: values.name,
+            id: Math.random(),
+            email: values.email,
+            phone: values.phone,
+            dateOfBirth: values.dateOfBirth.toDate(),
+            zipcode: values.zipcode,
+            password: values.password
+        };
 
-        //TODO: store new user info on server
+        // attempt to register new user
+        signUpWithUsernameAndPassword(newUser);
 
-        auth.login(() => {
-            addNewUser(values.username, '');
-        })
-        history.push('/main');
+        // check that user was successfully registered
+        if (auth.token) {
+            setMessage('');
+            history.push('/main');
+        } else {
+            setMessage('A user with these credentials already exists');
+        }
     };
 
     const formItemLayout = {
@@ -46,7 +71,7 @@ const SignUpForm = ({ history }) => {
             <Form {...formItemLayout}
                 form={form}
                 name="register"
-                onFinish={onFinish}
+                onFinish={ onFinish }
                 scrollToFirstError
                 >
 
@@ -192,6 +217,8 @@ const SignUpForm = ({ history }) => {
                         Register
                     </Button>
                 </Form.Item>
+
+                <div className='user-already-exists-error'>{ message }</div>
 
             </Form>
 

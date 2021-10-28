@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import FeedContext from '../../Context/feed-context';
 import { Space, Avatar, Button, Typography, Modal, Input } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 
@@ -9,36 +10,35 @@ function AccountFragment() {
 
     console.log('Account Fragment rendered');
 
-    var store = require('store');
-    let user = store.get('user');
-    let username = user['username'];
-    let headline = user['headline'];
-    let src = user['src'];
+    const { user, editHeadline } = useContext(FeedContext);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [status, setStatus] = useState(headline);
-    const [prevStatus, setPrevStatus] = useState(status);
+    const [headline, setHeadline] = useState(user.headline);
+    const [input, setInput] = useState('');
 
     const showModal = () => {
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
-        setPrevStatus(status);
+        if (headline !== 'Headline') {
+            editHeadline(headline);
+        }
+        setInput('');
         setIsModalVisible(false);
     };
 
     const handleCancel = () => {
-        setStatus(prevStatus);
+        setInput('');
         setIsModalVisible(false);
     };
 
     return (
         <Space direction='vertical' style={{ paddingTop: '8px' }}>
             <Space size={25}>
-                <Avatar className='avatar' id='avatar-profile' size={55} icon={<UserOutlined />} src={ src } />
+                <Avatar className='avatar' id='avatar-profile' size={55} icon={<UserOutlined />} src={ user.src } />
                 <Space align='center' size={0} direction='vertical' style={{ fontSize: '14px', color: '#fff' }}>
-                    <p style={{ lineHeight: '0px' }} id='avatar-username'>{ username }</p>
+                    <p style={{ lineHeight: '0px' }} id='avatar-username'>{ user.username }</p>
                     <Button type='link' className='profile-btn' id='btn-profile' href='/profile' style={{ fontSize: '12px', top: '-5px' }}>
                         Profile
                     </Button>
@@ -46,7 +46,7 @@ function AccountFragment() {
             </Space>
             <Space size={5} style={{ fontStyle: 'italic', fontSize: '13px', color: 'white', lineHeight: '-1px' }}>
                 <Text style={{width:'180px', color: 'white', fontSize: '13px', fontStyle: 'italic'}} ellipsis={{rows: 1}}>
-                    { status }
+                    { headline }
                 </Text>
                 <Button type='text' style={{
                     position: 'absolute',
@@ -70,7 +70,14 @@ function AccountFragment() {
                         </Button>
                     ]}
                 >
-                    <TextArea rows={1} placeholder='Headline Status' onChange={ (e) => { setStatus(e.target.value) } }/>
+                    <TextArea rows={1} placeholder='Headline Status' value={ input } 
+                        onChange={ 
+                            (e) => { 
+                                setHeadline(e.target.value);
+                                setInput(e.target.value); 
+                            } 
+                        }
+                    />
                 </Modal>
             </Space>
         </Space>

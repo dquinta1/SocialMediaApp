@@ -8,7 +8,7 @@ import {
 const { Meta } = Card;
 const { Text } = Typography;
 
-function PostCard(title, description, author, timestamp, src) {
+function PostListItem({id, title, description, author, timestamp, src, clickToEdit, clickToComment}) {
     return (
         <Card hoverable style={{ width: '500px' }} 
         cover={<Image src={ src } placeholder={ <CameraOutlined /> }/>}
@@ -29,4 +29,4 @@ function PostCard(title, description, author, timestamp, src) {
     );
 }
 
-export default PostCard;
+export default PostListItem;
