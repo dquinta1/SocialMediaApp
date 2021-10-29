@@ -1,4 +1,5 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useContext } from 'react';
+import AuthContext from '../../Auth/Auth-Context/AuthContext';
 import FeedContext from './feed-context';
 import feedReducer from './feed-reducer';
 import { requestFollowers, requestPosts, requestUser } from '../../Common/APIUtils';
@@ -12,7 +13,8 @@ import {
     ADD_COMMENT,
     EDIT_HEADLINE, 
     UPDATE_FOLLOWERS,
-    UPDATE_POSTS
+    UPDATE_POSTS,
+    UPDATE_USER
 } from './feed-actions';
 
 const FeedState = (props) => {
@@ -26,7 +28,7 @@ const FeedState = (props) => {
         // { username:'', name:'', id:'', headline:'', src:'' }
         user: (typeof(store.get('user')) !== typeof(undefined))  
             ? store.get('user') 
-            : requestUser(),
+            : undefined,
 
         // { id: '10', name: 'John Doe', headline: 'status', src: 'img.png' }
         followers: (typeof(store.get('followers')) !== typeof(undefined))  
@@ -41,6 +43,9 @@ const FeedState = (props) => {
 
     // configure state management
     const [state, dispatch] = useReducer(feedReducer, initialState);
+
+    // get auth'd data from context
+    const { auth } = useContext(AuthContext);
 
     console.log('state', state);
 
@@ -117,6 +122,14 @@ const FeedState = (props) => {
         });
     }
 
+    // Update auth'd user
+    const updateUser = (user) => {
+        dispatch({
+            type: UPDATE_USER,
+            payload: user,
+        });
+    };
+
     // Edit User's headline
     const editHeadline = (headline) => {
         dispatch({
@@ -125,16 +138,21 @@ const FeedState = (props) => {
         });
     }
 
+    // resolve promises to initialize state (GET from backend)
     useEffect( async () => {
 
         console.log('Feed useEffect, state: ', state);
 
+        if (typeof(state.user) === typeof(undefined)) {
+            const loadedUser = await requestUser(auth.id);
+            updateUser(loadedUser);
+        }
         if (state.followers.length === 0) {
-            const loadedFollowers = await requestFollowers();
+            const loadedFollowers = await requestFollowers(auth.id);
             updateFollowers(loadedFollowers);
         }
         if (state.posts.length === 0) {            
-            const loadedPosts = await requestPosts();
+            const loadedPosts = await requestPosts(auth.id);
             updatePosts(loadedPosts);
         }
         
@@ -163,6 +181,7 @@ const FeedState = (props) => {
                 editPost,
                 addComment,
                 user: state.user,
+                updateUser,
                 editHeadline,
             }}
         >

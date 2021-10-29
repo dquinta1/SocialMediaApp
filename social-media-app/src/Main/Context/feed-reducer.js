@@ -8,7 +8,8 @@ import {
     FILTER_POSTS,
     EDIT_POST,
     ADD_COMMENT,
-    EDIT_HEADLINE
+    EDIT_HEADLINE,
+    UPDATE_USER
 } from './feed-actions';
 
 const feedReducer = (state, action) => {
@@ -74,6 +75,11 @@ const feedReducer = (state, action) => {
             return {
                 ...state,
                 user: { ...state.user, headline: action.payload } // replace current headline
+            };
+        case UPDATE_USER:
+            return{
+                ...state,
+                user: action.payload,
             };
         default:
             return state;
