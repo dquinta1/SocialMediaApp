@@ -9,6 +9,8 @@ import {
     EDIT_POST,
     ADD_COMMENT,
     EDIT_HEADLINE,
+    EDIT_AVATAR,
+    EDIT_PROFILE,
     UPDATE_USER
 } from './feed-actions';
 
@@ -71,15 +73,33 @@ const feedReducer = (state, action) => {
                         : post
                 ),
             };
+        case UPDATE_USER:
+            return{
+                ...state,
+                user: action.payload,
+            };
         case EDIT_HEADLINE:
             return {
                 ...state,
                 user: { ...state.user, headline: action.payload } // replace current headline
             };
-        case UPDATE_USER:
-            return{
+        case EDIT_AVATAR:
+            return {
                 ...state,
-                user: action.payload,
+                user: {...state.user, src: action.payload}
+            };
+        case EDIT_PROFILE:
+            return {
+                ...state,
+                // replace modified profile values
+                user: { 
+                    ...state.user, 
+                    name: action.payload.name,
+                    email: action.payload.email,
+                    phone: action.payload.phone,
+                    zipcode: action.payload.zipcode,
+                    password: action.payload.password
+                 } 
             };
         default:
             return state;

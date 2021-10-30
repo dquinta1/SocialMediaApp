@@ -14,4 +14,6 @@ export const UPDATE_POSTS = 'UPDATE_POSTS';
 
 // User State Action
 export const EDIT_HEADLINE = 'EDIT_HEADLINE';
+export const EDIT_AVATAR = 'EDIT_AVATAR';
+export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const UPDATE_USER = 'UPDATE_USER';

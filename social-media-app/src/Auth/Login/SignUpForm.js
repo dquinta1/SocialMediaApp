@@ -182,6 +182,10 @@ const SignUpForm = ({ history }) => {
                         required: true,
                         message: 'Please input your password!',
                     },
+                    {
+                        min: 3,
+                        message: 'Password must be at least 3 characters',
+                    }
                     ]}
                     hasFeedback
                 >

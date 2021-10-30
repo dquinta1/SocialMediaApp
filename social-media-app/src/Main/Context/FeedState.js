@@ -11,10 +11,12 @@ import {
     FILTER_POSTS,
     EDIT_POST,
     ADD_COMMENT,
-    EDIT_HEADLINE, 
+    EDIT_HEADLINE,
+    EDIT_AVATAR, 
     UPDATE_FOLLOWERS,
     UPDATE_POSTS,
-    UPDATE_USER
+    UPDATE_USER,
+    EDIT_PROFILE
 } from './feed-actions';
 
 const FeedState = (props) => {
@@ -138,6 +140,23 @@ const FeedState = (props) => {
         });
     }
 
+    // Edit Avatar's source when new pic uploaded
+    const editAvatar = (src) => {
+        dispatch({
+            action: EDIT_AVATAR,
+            payload: src,
+        });
+    };
+
+    // Edit Avatar's source when new pic uploaded
+    const editProfile = (profile) => {
+        dispatch({
+            action: EDIT_PROFILE,
+            payload: profile,
+        });
+        console.log('editProfile dispatched');
+    };
+
     // resolve promises to initialize state (GET from backend)
     useEffect( async () => {
 
@@ -164,7 +183,7 @@ const FeedState = (props) => {
         store.set('followers', state.followers); // TODO: we only want to update if previous state is different from current
         store.set('posts', state.posts); // TODO: we only want to update if previous state is different from current
         store.set('user', state.user); // TODO: we only want to update if previous state is different from current
-    }, [state.user, state.followers, state.posts]);
+    }, [state]);
 
     return (
         <FeedContext.Provider 
@@ -183,6 +202,8 @@ const FeedState = (props) => {
                 user: state.user,
                 updateUser,
                 editHeadline,
+                editAvatar,
+                editProfile
             }}
         >
             {props.children}

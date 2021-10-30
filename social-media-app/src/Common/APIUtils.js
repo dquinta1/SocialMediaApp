@@ -136,7 +136,7 @@ export async function requestUser(id) {
             name: 'Jon Doearyen',
             id: 1,
             headline: 'I know nothing JDoe',
-            src: 'https://picsum.photos/400/400',
+            src: 'https://picsum.photos/600/600',
             // data necessary for profile
             email: 'jd@somemail.com',
             phone: '302-123-4539',
@@ -163,7 +163,7 @@ export async function requestUser(id) {
             name: data[id]['name'],
             id: id,
             headline: data[id]['company']['catchPhrase'],
-            src: 'https://picsum.photos/400/400',
+            src: 'https://picsum.photos/600/600',
             // data necessary for profile
             email: 'jd@somemail.com',
             phone: '302-123-4539',
@@ -173,6 +173,9 @@ export async function requestUser(id) {
             confirm: '1234'
         }
     }
+
+    console.log('new user after request = ', newUser);
+
     // using localStorage to cache
     var store = require('store');
 
