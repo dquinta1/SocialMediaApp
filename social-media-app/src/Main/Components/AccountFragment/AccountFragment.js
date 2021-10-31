@@ -14,10 +14,11 @@ function AccountFragment() {
     const { user, editHeadline } = useContext(FeedContext);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [headline, setHeadline] = useState('Loading status...');
     const [input, setInput] = useState('');
 
     let isLoading = true;
+
+    const [headline, setHeadline] = useState(isLoading ? 'Headline' : user.headline);
 
     if (typeof(user) !== typeof(undefined)) {
         isLoading = false;
@@ -28,9 +29,10 @@ function AccountFragment() {
     };
 
     const handleOk = () => {
-        if (headline !== 'Headline') {
+        if (input !== '') {
             setHeadline(input);
             editHeadline(headline);
+            isLoading = true;
         }
         setInput('');
         setIsModalVisible(false);
