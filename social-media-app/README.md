@@ -14,11 +14,6 @@
 - each article has a list of comments displayed (you may want to show/hide them or use some other means to make it user friendly)
 
 #### Tests:
-- Validate Authentication
-    - should log in a previously registered user (not new users, login state should be set)
-    - should not log in an invalid user (error state should be set)
-    - should log out a user (login state should be cleared)
-
 - Validate Article actions
     - should fetch all articles for current logged in user (posts state is set)
     - should fetch subset of articles for current logged in user given search keyword (posts state is filtered)
