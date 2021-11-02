@@ -188,22 +188,22 @@ const FeedState = (props) => {
     return (
         <FeedContext.Provider 
             value={{
+                user: state.user,
+                updateUser,
+                editHeadline,
+                editAvatar,
+                editProfile,
                 followers: state.followers,
+                updateFollowers,
                 addFollower,
                 removeFollower,
-                updateFollowers,
                 posts: state.posts,
                 updatePosts,
                 addPosts,
                 removePost,
                 filterPosts,
                 editPost,
-                addComment,
-                user: state.user,
-                updateUser,
-                editHeadline,
-                editAvatar,
-                editProfile
+                addComment
             }}
         >
             {props.children}

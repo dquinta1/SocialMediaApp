@@ -2,7 +2,12 @@ import 'regenerator-runtime';
 import React, { useContext } from 'react';
 import AuthContext from './AuthContext';
 import AuthState from './AuthState';
-import { fireEvent, render, waitFor, screen } from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	waitFor,
+	screen,
+} from '@testing-library/react';
 import { afterEach } from 'jest-circus';
 
 // create global test component to contain auth state

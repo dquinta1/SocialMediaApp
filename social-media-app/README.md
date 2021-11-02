@@ -13,7 +13,12 @@
 - suitable message when trying to add user that does not exist
 - each article has a list of comments displayed (you may want to show/hide them or use some other means to make it user friendly)
 
-#### Tests:
+#### After Integration
+- Remove global and local state management logic
+- Add Async State Management logic using React Query
+- Beautify
+
+#### Tests (after code refactor with React Query):
 - Validate Article actions
     - should fetch all articles for current logged in user (posts state is set)
     - should fetch subset of articles for current logged in user given search keyword (posts state is filtered)
@@ -22,10 +27,3 @@
 
 - Validate Profile actions
     - should fetch the logged in user's profile username
-
-#### After Integration
-- Remove global and local state management logic
-- Add Async State Management logic using React Query
-- Beautify
-
-
