@@ -8,15 +8,13 @@ const UploadAvatar = () => {
 
     const { user, editAvatar } = useContext(FeedContext);
 
-    const [isLoading, setLoading] = useState(true);
-
     // TODO: implement function that trigger on onChange and calls editAvatar
 
-    useEffect(() => {
-        if (typeof(user) !== typeof(undefined)) {
-            setLoading(false);
-        }
-    }, [user]);
+    let isLoading = true;
+
+    if (typeof(user) !== typeof(undefined)) {
+        isLoading = false;
+    }
 
     return (
         <>
