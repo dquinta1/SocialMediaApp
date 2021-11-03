@@ -25,23 +25,28 @@ const ProfileForm = () => {
 		// create new user Profile based on input
 		const newProfile = {
 			name:
-				form.getFieldValue('name') === ''
+				form.getFieldValue('name') === '' ||
+				typeof form.getFieldValue('name') === typeof undefined
 					? user.name
 					: form.getFieldValue('name'),
 			email:
-				form.getFieldValue('email') === ''
+				form.getFieldValue('email') === '' ||
+				typeof form.getFieldValue('email') === typeof undefined
 					? user.email
 					: form.getFieldValue('email'),
 			phone:
-				form.getFieldValue('phone') === ''
+				form.getFieldValue('phone') === '' ||
+				typeof form.getFieldValue('phone') === typeof undefined
 					? user.phone
 					: form.getFieldValue('phone'),
 			zipcode:
-				form.getFieldValue('zipcode') === ''
+				form.getFieldValue('zipcode') === '' ||
+				typeof form.getFieldValue('zipcode') === typeof undefined
 					? user.zipcode
 					: form.getFieldValue('zipcode'),
 			password:
-				form.getFieldValue('password') === ''
+				form.getFieldValue('password') === '' ||
+				typeof form.getFieldValue('password') === typeof undefined
 					? user.password
 					: form.getFieldValue('password'),
 		};

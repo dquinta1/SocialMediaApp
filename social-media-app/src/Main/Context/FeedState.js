@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import AuthContext from '../../Auth/Auth-Context/AuthContext';
 import FeedContext from './feed-context';
 import feedReducer from './feed-reducer';
-import { requestFollowers, requestPosts, requestUser } from '../../Common/APIUtils';
+import { requestFollower, requestFollowers, requestPosts, requestUser } from '../../Common/APIUtils';
 import { 
     ADD_FOLLOWER, 
     REMOVE_FOLLOWER,
@@ -52,7 +52,10 @@ const FeedState = (props) => {
     console.log('state', state);
 
     // Add a new Follower
-    const addFollower = (follower) => {
+    const addFollower = async (followerName) => {
+
+        const follower = await requestFollower(followerName);
+
         dispatch({
             type: ADD_FOLLOWER,
             payload: follower,

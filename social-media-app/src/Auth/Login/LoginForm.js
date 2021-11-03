@@ -58,7 +58,7 @@ const LoginForm = ({login, history}) => {
 
                 <Form.Item>
                     <Space>
-                        <Button type='primary' onClick={ clickToLogin }>
+                        <Button type='primary' onClick={ clickToLogin } htmlType='submit'>
                             Log in
                         </Button>
                         <Button type='default' className="signup-btn" onClick= { goToSignUp }>

@@ -18,7 +18,10 @@ function AccountFragment() {
 
     let isLoading = true;
 
-    const [headline, setHeadline] = useState(isLoading ? 'Headline' : user.headline);
+    // using localStorage to simulate headline change persistence (remove in next phase)
+    var store = require('store');
+
+    const [headline, setHeadline] = useState(store.get('headline'));
 
     if (typeof(user) !== typeof(undefined)) {
         isLoading = false;
@@ -31,7 +34,8 @@ function AccountFragment() {
     const handleOk = () => {
         if (input !== '') {
             setHeadline(input);
-            editHeadline(headline);
+            // editHeadline(headline);
+            store.set('headline', input);
             isLoading = true;
         }
         setInput('');
@@ -39,7 +43,7 @@ function AccountFragment() {
     };
 
     const handleCancel = () => {
-        setInput(headline);
+        setInput('');
         setIsModalVisible(false);
     };
 
@@ -56,7 +60,7 @@ function AccountFragment() {
             </Space>
             <Space size={5} style={{ fontStyle: 'italic', fontSize: '13px', color: 'white', lineHeight: '-1px' }}>
                 <Text style={{width:'180px', color: 'white', fontSize: '13px', fontStyle: 'italic'}} ellipsis={{rows: 1}}>
-                    { isLoading ? headline : user.headline }
+                    { headline }
                 </Text>
                 <Button type='text' style={{
                     position: 'absolute',

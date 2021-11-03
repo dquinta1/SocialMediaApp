@@ -35,6 +35,7 @@ const PostsList = () => {
                             description={ post.description }
                             author={ post.author }
                             timestamp={ post.timestamp }
+                            comments={ post.comments }
                             src={ post.src }
                             clickToEdit={ editPost }
                             clickToComment={ addComment }

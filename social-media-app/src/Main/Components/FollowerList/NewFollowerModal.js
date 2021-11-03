@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import FeedContext from '../../Context/feed-context';
-import { Button, Modal, Input, Upload } from 'antd';
+import { Button, Modal, Input, Upload, message } from 'antd';
 import { 
     PlusOutlined,
     FileImageOutlined
@@ -20,9 +20,8 @@ const NewFollowerModal = () => {
         setIsModalVisible(true);
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         if ( name !== '' &&  headline !== ''){
-
             // format new follower
             const newFollower = {
                 name: name,
@@ -31,11 +30,19 @@ const NewFollowerModal = () => {
                 src: 'https://picsum.photos/200/200',
             }
 
-            addFollower(newFollower);
+            try {
+                await addFollower(newFollower.name);
+                message.success('New user is being followed!', 5);
+            } catch (error) {
+                message.error(error.message, 5);
+            }
 
-            setName('');
-            setHeadline('');
+        } else {
+            message.warning('Input is empty', 5);
         }
+
+        setName('');
+        setHeadline('');
         setIsModalVisible(false);
     };
 

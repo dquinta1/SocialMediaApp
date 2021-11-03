@@ -41,9 +41,9 @@ const TestComponent = ({ follower, followerID, criteria }) => {
 
 	return (
 		<>
-			<div data-testid='user'>Logged-in User: {user.username}</div>
-			<div data-testid='followers'>Followers: {followers.length}</div>
-			<div data-testid='posts'>Posts: {posts.length}</div>
+			<div data-testid='user'>Logged-in User: {user}</div>
+			<div data-testid='followers'>Followers: {followers}</div>
+			<div data-testid='posts'>Posts: {posts}</div>
 			<button onClick={clickToAddFollower}>Add Follower</button>
 			<button onClick={clickToRemoveFollower}>Remove Follower</button>
 			<button onClick={clickToFilterPosts}>Filter Posts</button>

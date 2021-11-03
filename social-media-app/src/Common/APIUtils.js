@@ -25,22 +25,86 @@ export async function requestFollowers(id) {
 	console.log('userID', id);
 	console.log('data', data[10]);
 
-	// pull current user's followers among All users
-	for (let index = 0; index < 3; index++) {
-		const element = data[(id + index + 1) % 10];
-		console.log('element', element);
+	// newly created user has no posts and only follows user with id: 1
+	if (id === -1) {
+		console.log('new user requesting follower', data[1]);
+
 		followers.push({
-			id: element['id'],
-			name: element['name'],
-			headline: element['company']['catchPhrase'],
+			id: 1,
+			name: data[1]['name'],
+			headline: data[1]['company']['catchPhrase'],
 			src: 'https://picsum.photos/200/200',
 		});
+
+		console.log('list of followers', followers);
 	}
+
+	// user is already registered (a json placeholder user)
+	else {
+		// pull current user's followers among All users
+		for (let index = 0; index < 3; index++) {
+			const element = data[(id + index + 1) % 10];
+			console.log('element', element);
+			followers.push({
+				id: element['id'],
+				name: element['name'],
+				headline: element['company']['catchPhrase'],
+				src: 'https://picsum.photos/200/200',
+			});
+		}
+	}
+
 	//using local storage to cache
 	var store = require('store');
 	store.set('followers', followers);
 
 	return followers;
+}
+
+export async function requestFollower(followerName) {
+	// pull current followers from store
+	var store = require('store');
+	let followers = store.get('followers');
+
+	// check if follower is not already among followers
+	followers.forEach((follower) => {
+		if (follower.name === followerName) {
+			throw Error('This user is already being followed by you');
+		}
+	});
+
+	// GET request to Api
+	const response = await axios.get(
+		'https://jsonplaceholder.typicode.com/users'
+	); // TODO: catch error
+
+	// format response into mapping: username -> user
+	let info = response.data;
+	let data = {};
+
+	for (let index = 0; index < info.length; index++) {
+		const element = info[index];
+		data[element.name] = element;
+	}
+
+	// check if the added follower exists among registered users
+	if (!(followerName in data)) {
+		throw Error('This user is not registered');
+	}
+
+	const newFollower = {
+		// data necessary for Follower List Item
+		name: data[followerName]['name'],
+		id: data[followerName]['id'],
+		headline: data[followerName]['company']['catchPhrase'],
+		src: 'https://picsum.photos/600/600',
+	};
+
+	// update new followers list in store
+	followers.push(newFollower);
+	store.set('followers', followers);
+
+	return newFollower;
 }
 
 export async function requestPosts(id) {
@@ -96,7 +160,10 @@ export async function requestPosts(id) {
 					author: follower.name,
 					timestamp: Date.now(),
 					src: 'https://picsum.photos/1000/1000',
-					comments: [],
+					comments: [
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+						'Duis euismod congue metus sit amet molestie.',
+					],
 				});
 			}
 		}
@@ -134,7 +201,7 @@ export async function requestUser(id) {
 			// data necessary for Account Fragment
 			username: 'randoUser1',
 			name: 'Jon Doearyen',
-			id: 1,
+			id: -1,
 			headline: 'I know nothing JDoe',
 			src: 'https://picsum.photos/600/600',
 			// data necessary for profile
@@ -221,6 +288,10 @@ export async function fakeSignIn(username, password) {
 			// var store = require('store');
 			// store.set('user', newUser);
 
+			// storing headline just to satisfy hw requirements
+			var store = require('store');
+			store.set('headline', data[username]['company']['catchPhrase']);
+
 			return {
 				token: true,
 				id: data[username]['id'],
@@ -236,11 +307,65 @@ export async function fakeSignIn(username, password) {
 
 // Simulates a sign-up
 export async function fakeSignUp(user) {
-	// TODO: Check that these credential don't already exist
-	// TODO: set the store to contain undefined user so requestUser will be called
-	// and the harcoded user loaded into state
-	// TODO: return { token: true, id: 1 } on success to meet requirements
+	// Check that these credential don't already exist
+	// GET request to Api
+	const response = await axios.get(
+		'https://jsonplaceholder.typicode.com/users'
+	); // TODO: catch error
+
+	// format response into mapping: username -> user
+	let info = response.data;
+	let data = {};
+
+	for (let index = 0; index < info.length; index++) {
+		const element = info[index];
+		data[element.username] = element;
+	}
+
+	// validate credentials
+	if (user.username in data) {
+		return {
+			token: false,
+			id: undefined,
+		};
+	}
+	// set the store to contain the new user so requestUser will not be called
+	else {
+		var store = require('store');
+		const newUser = {
+			// data necessary for Account Fragment
+			username: user.username,
+			name: user.name,
+			id: user.id,
+			headline: 'You know nothing Jon Snow',
+			src: 'https://picsum.photos/600/600',
+			// data necessary for profile
+			email: user.email,
+			phone: user.phone,
+			dateOfBirth: user.dateOfBirth,
+			zipcode: user.zipcode,
+			password: user.password,
+			confirm: user.confirm,
+		};
+		store.set('user', newUser);
+		store.set('headline', 'You know nothing Jon Snow');
+		// hardcode value for user's only followed
+		const followers = [
+			{
+				id: 1,
+				name: 'Leanne Graham',
+				headline: 'Multi-layered client-server neural-net',
+				src: 'https://picsum.photos/200/200',
+			},
+		];
+		store.set('followers', followers);
+	}
+	// return { token: true, id: 1 } on success to meet requirements
 	// for new user created at this phase in the project
+	return {
+		token: true,
+		id: -1,
+	};
 }
 
 // Simulates a sign-out

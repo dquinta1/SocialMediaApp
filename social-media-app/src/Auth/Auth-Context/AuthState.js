@@ -40,13 +40,15 @@ const AuthState = (props) => {
     };
 
     // Sign Up with username and password
-    const signUpWithUsernameAndPassword = (user) => {
-        const { token, id } = fakeSignUp(user);
+    const signUpWithUsernameAndPassword = async (user) => {
+        const { token, id } = await fakeSignUp(user);
 
         dispatch({
             type: SIGN_UP,
             payload: [token, id],
         });
+
+        return token;
     };
 
     // Sign Out
