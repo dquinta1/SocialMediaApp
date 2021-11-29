@@ -1,2 +1,3 @@
-# SocialMediaApp
-SPA Web App using React to simulate a social media application.
+netid: daq2
+
+frontend: https://daq2-social-media-app-last.surge.sh/
