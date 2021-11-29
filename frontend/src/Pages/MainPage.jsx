@@ -9,8 +9,8 @@ import NewArticleModal from '../Components/Articles/NewArticle/NewArticleModal';
 
 const { Header, Sider, Content, Footer } = Layout;
 
-const MainPage = ({ history }) => {
-	const { logout } = useLogout(history);
+const MainPage = () => {
+	const { logout } = useLogout();
 
 	return (
 		<Layout>

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { message } from 'antd';
 import axios from '../Tools/axios';
 import validationMessage from '../Helpers/validation-message';
+import { useNavigate } from 'react-router-dom';
 
-const useLogin = (history) => {
+const useLogin = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
 	const clickToLogin = async () => {
 		// only perfom login logic if there is some input
@@ -13,7 +15,7 @@ const useLogin = (history) => {
 			try {
 				await axios.post('/login', { username, password });
 				validationMessage('Logging In', 'Logged In Successfully', () =>
-					history.push('/')
+					navigate('/')
 				);
 			} catch (error) {
 				switch (error.response.status) {
@@ -29,7 +31,7 @@ const useLogin = (history) => {
 	};
 
 	const goToSignUp = () => {
-		history.push('/signup');
+		navigate('/signup');
 	};
 
 	// TODO: if user is already authorized then redirect to main page

@@ -1,8 +1,10 @@
 import { Form, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import validationMessage from '../Helpers/validation-message';
 import axios from '../Tools/axios';
 
-export default function useRegister(history) {
+export default function useRegister() {
+	const navigate = useNavigate();
 	const [form] = Form.useForm();
 
 	// TODO: if user is already authorized then redirect to main page
@@ -24,7 +26,7 @@ export default function useRegister(history) {
 				password: values.password,
 			});
 			validationMessage('Creating Account', 'Registered Successfully!', () =>
-				history.push('/')
+				navigate('/')
 			);
 		} catch (error) {
 			switch (error.response.status) {

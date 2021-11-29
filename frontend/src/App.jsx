@@ -9,10 +9,11 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 const queryClient = new QueryClient();
 
 function App() {
+
 	return (
 		<div className='App'>
-			<QueryClientProvider client={queryClient}>
-				<Router>
+			<Router>
+				<QueryClientProvider client={queryClient}>
 					<Routes>
 						<Route path='/login' element={<LandingPage />} />
 						<Route path='/signup' element={<SignUpForm />} />
@@ -22,8 +23,8 @@ function App() {
 						{/* <Route path='/profile' element={<ProfilePage />} /> */}
 						<Route path='*' element={() => '404 NOT FOUND'} />
 					</Routes>
-				</Router>
-			</QueryClientProvider>
+				</QueryClientProvider>
+			</Router>
 		</div>
 	);
 }

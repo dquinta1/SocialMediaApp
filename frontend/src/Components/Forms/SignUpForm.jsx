@@ -1,12 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, DatePicker, Space } from 'antd';
 import useRegister from '../../Auth/useRegister';
+import { useNavigate } from 'react-router-dom';
 
 // const phoneRegExp =
 // 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-const SignUpForm = ({ history }) => {
-	const { form, onFinish } = useRegister(history);
+const SignUpForm = () => {
+	const navigate = useNavigate();
+	const { form, onFinish } = useRegister();
 
 	const formItemLayout = {
 		labelCol: {
@@ -32,7 +34,11 @@ const SignUpForm = ({ history }) => {
 			<Space
 				style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'start' }}
 			>
-				<Button type='link' style={{ flex: 'start' }} href='/login'>
+				<Button
+					type='link'
+					style={{ flex: 'start' }}
+					onClick={() => navigate('/login')}
+				>
 					Back to Log In
 				</Button>
 				{/* <h1 className='signup-header' style={{ flex: '1 auto' }}>

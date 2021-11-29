@@ -4,7 +4,7 @@ import LoginForm from '../Components/Forms/LoginForm';
 
 const { Header, Content } = Layout;
 
-const LandingPage = ({ history }) => {
+const LandingPage = () => {
 	return (
 		<Layout
 			theme='light'
@@ -25,7 +25,7 @@ const LandingPage = ({ history }) => {
 			<Content
 				style={{ margin: 'auto', overflow: 'initial', paddingTop: '30%' }}
 			>
-				<LoginForm history={history} />
+				<LoginForm />
 			</Content>
 		</Layout>
 	);

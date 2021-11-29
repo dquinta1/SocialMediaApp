@@ -1,11 +1,13 @@
 import { useState, useContext } from 'react';
 import { Space, Avatar, Button, Typography, Modal, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 const { TextArea } = Input;
 
 function DisplayAvatar() {
+	const navigate = useNavigate();
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [input, setInput] = useState('');
 
@@ -53,7 +55,7 @@ function DisplayAvatar() {
 						type='link'
 						className='profile-btn'
 						id='btn-profile'
-						href='/profile'
+						onClick={() => navigate('/profile')}
 						style={{ fontSize: '12px', top: '-5px' }}
 					>
 						Profile
