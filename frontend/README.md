@@ -1,4 +1,4 @@
-# Social Media App Project
+# Social Media App Frontend
 
 ### TODO:
 
