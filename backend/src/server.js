@@ -59,7 +59,7 @@ mongoose.connection.on('connected', (ref) => {
 	// Routes
 	app.use('/articles', articlesRouter);
 	app.use('/article', articleRouter);
-	app.use('/user-profile', profileRouter);
+	app.use('/profile', profileRouter);
 	app.use('/following', followingRouter);
 
 	// Get the port from the environment, i.e., Heroku sets it
