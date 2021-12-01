@@ -1,11 +1,11 @@
 import { Button, Layout, Space, List } from 'antd';
 import useLogout from '../Auth/useLogout';
-// import DisplayAvatar from '../Components/Avatar/DisplayAvatar';
-// import FollowingList from '../Components/Following/FollowingList';
-// import NewFollowingModal from '../Components/Following/NewFollowingModal';
+import DisplayAvatar from '../Components/Avatar/DisplayAvatar';
+import FollowingList from '../Components/Following/FollowingList';
+import NewFollowingModal from '../Components/Following/NewFollowing/NewFollowingModal';
 import ArticlesList from '../Components/Articles/ArticlesList';
 import NewArticleModal from '../Components/Articles/NewArticle/NewArticleModal';
-// import SearchFragment from '../Components/Search/SearchFragment';
+import SearchFragment from '../Components/Search/SearchFragment';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -22,13 +22,13 @@ const MainPage = () => {
 					left: 0,
 				}}
 			>
-				<div className='logo'>{/* <DisplayAvatar /> */}</div>
+				<div className='logo'><DisplayAvatar /></div>
 				<List itemLayout='vertical' split={false}>
-					{/* <FollowingList />
+					<FollowingList />
 
 						<List.Item key={-1}>
 							<NewFollowingModal />
-						</List.Item> */}
+						</List.Item>
 				</List>
 				<div style={{ display: 'inline-flex' }}>
 					<Button
@@ -45,7 +45,7 @@ const MainPage = () => {
 			</Sider>
 			<Layout className='main-layout' style={{ marginLeft: 200 }}>
 				<Header className='main-layout-background' style={{ padding: 15 }}>
-					{/* <SearchFragment /> */}
+					<SearchFragment />
 				</Header>
 
 				<Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

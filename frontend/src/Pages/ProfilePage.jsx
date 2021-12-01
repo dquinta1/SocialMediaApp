@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileForm from '../Components/Forms/ProfileForm';
+import ProfileForm from '../Components/Forms/Profile/ProfileForm';
 import UploadAvatar from '../Components/Avatar/UploadAvatar';
 import { Layout, Space, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,6 @@ const ProfilePage = () => {
 					</Button>
 				</Space>
 			</Header>
-
 			<Content style={{ margin: 'auto', paddingTop: '20px' }}>
 				<Space size={50} direction='vertical'>
 					<UploadAvatar />

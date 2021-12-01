@@ -2,7 +2,7 @@ import './App.css';
 import LandingPage from './Pages/LandingPage';
 import SignUpForm from './Components/Forms/SignUpForm';
 import MainPage from './Pages/MainPage';
-// import ProfilePage from './Pages/ProfilePage';
+import ProfilePage from './Pages/ProfilePage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
@@ -20,7 +20,7 @@ function App() {
 
 						{/* These should be protected routes */}
 						<Route path='/' element={<MainPage />} />
-						{/* <Route path='/profile' element={<ProfilePage />} /> */}
+						<Route path='/profile' element={<ProfilePage />} />
 						<Route path='*' element={() => '404 NOT FOUND'} />
 					</Routes>
 				</QueryClientProvider>

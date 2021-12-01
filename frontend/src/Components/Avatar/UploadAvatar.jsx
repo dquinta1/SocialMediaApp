@@ -1,25 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Avatar, Upload, Button } from 'antd';
 import { FileImageOutlined } from '@ant-design/icons';
-import { useEffect } from 'react/cjs/react.development';
+import useProfile from '../../Hooks/Profile/useProfile';
 
 const UploadAvatar = () => {
+	const { data, status, error } = useProfile();
 
-    // TODO: implement function that trigger on onChange and calls editAvatar
+	// TODO: implement function that trigger on onChange and calls editAvatar
 
-    return (
-        <>
-            {
-            (isLoading) 
-                ? <h1>Nothing to See Here</h1>
-                : <Upload accept={'.png,.jpg,.jpeg'} maxCount={1} onChange={() => {/*TODO: Implement this*/}}>
-                    <Button type='link' size={80}>
-                        <Avatar size={80} icon={<FileImageOutlined />} src={ user.src }/>
-                    </Button>
-                </Upload>
-            }   
-        </>
-    )
-}
+	switch (status) {
+		case 'loading':
+			return <div>Loading...</div>; // TODO: fix this
+		case 'error':
+			return <div>{error.message}</div>; // TODO: fix this
+		case 'success':
+			return (
+				<>
+					<Upload
+						accept={'.png,.jpg,.jpeg'}
+						maxCount={1}
+						onChange={() => {
+							/*TODO: Implement this*/
+						}}
+					>
+						<Button type='link' size={80}>
+							<Avatar size={80} icon={<FileImageOutlined />} src={data.avatar} />
+						</Button>
+					</Upload>
+				</>
+			);
+		default:
+			break;
+	}
+};
 
 export default UploadAvatar;
