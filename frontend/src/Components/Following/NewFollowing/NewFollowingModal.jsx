@@ -1,6 +1,5 @@
-import { useState, useContext } from 'react';
-import { Button, Modal, Input, Upload, message } from 'antd';
-import { PlusOutlined, FileImageOutlined } from '@ant-design/icons';
+import { Button, Modal, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import useLogic from './useLogic';
 
 const { TextArea } = Input;
@@ -38,7 +37,7 @@ const NewFollowingModal = () => {
 						<Button
 							key='submit'
 							type='primary'
-							/*{loading={loading}}*/ onClick={handleOk}
+							onClick={handleOk}
 						>
 							Submit
 						</Button>

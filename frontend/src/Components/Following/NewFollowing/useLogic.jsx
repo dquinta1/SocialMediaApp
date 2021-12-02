@@ -1,31 +1,35 @@
-import { useState } from "react";
-import { message } from "antd";
+import { useState } from 'react';
+import { message } from 'antd';
+import useAddFollowing from '../../../Hooks/Following/useAddFollowing';
+import useStatusMessages from '../../../Hooks/useStatusMessages';
 
 export default function useLogic() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
+	const followingMutation = useAddFollowing();
+
+	// detailed error messages
+	const errMsg =
+		followingMutation.status !== 'error'
+			? ''
+			: followingMutation.error.response.status === 404
+			? 'This user does not exist'
+			: followingMutation.error.response.status === 400
+			? 'You already follow this user'
+			: 'Internal Server Error, check your connection';
+
+	// react to following list mutations
+	useStatusMessages(followingMutation.status, 'Loading..', errMsg, 'Success!');
 
 	const showModal = () => {
 		setIsModalVisible(true);
 	};
 
-	const handleOk = async () => {
+	const handleOk = () => {
 		if (name !== '') {
-			// TODO: get new following
-			// const newFollower = {
-			// 	name: name,
-			// 	id: Math.random(),
-			// 	headline: headline,
-			// 	src: 'https://picsum.photos/200/200',
-			// };
-			// try {
-			// 	await addFollower(newFollower.name);
-			// 	message.success('New user is being followed!', 5);
-			// } catch (error) {
-			// 	message.error(error.message, 5);
-			// }
+			followingMutation.mutate(name);
 		} else {
-			message.warning('Input is empty', 5);
+			message.warning('Input was empty', 5);
 		}
 
 		setName('');
@@ -38,9 +42,9 @@ export default function useLogic() {
 	};
 
 	return {
-        name,
+		name,
 		isModalVisible,
-        setName,
+		setName,
 		showModal,
 		handleOk,
 		handleCancel,

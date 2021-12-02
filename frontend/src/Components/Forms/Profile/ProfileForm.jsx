@@ -10,6 +10,25 @@ const ProfileForm = () => {
 	const { form, onFinish } = useLogic();
 	const { data, status, error } = useProfile();
 
+	const formItemLayout = {
+		labelCol: {
+			xs: {
+				span: 14,
+			},
+			sm: {
+				span: 8,
+			},
+		},
+		wrapperCol: {
+			xs: {
+				span: 14,
+			},
+			sm: {
+				span: 8,
+			},
+		},
+	};
+
 	switch (status) {
 		case 'loading':
 			return <div>Loading...</div>;
@@ -19,6 +38,7 @@ const ProfileForm = () => {
 			return (
 				<>
 					<Form
+						// {...formItemLayout}
 						form={form}
 						name='editProfile'
 						onFinish={onFinish}
@@ -78,8 +98,21 @@ const ProfileForm = () => {
 							</Space>
 						</Form.Item>
 						<Form.Item
+							name='oldPassword'
+							label='Old Password'
+							rules={[
+								{
+									min: 3,
+									message: 'Password must be at least 3 characters',
+								},
+							]}
+							hasFeedback
+						>
+							<Input.Password minLength={3} />
+						</Form.Item>
+						<Form.Item
 							name='password'
-							label='Password'
+							label='New Password'
 							rules={[
 								{
 									min: 3,

@@ -1,8 +1,19 @@
 import { useState } from 'react';
+import useUpdateProfile from '../../Hooks/Profile/useUpdateProfile';
+import useStatusMessages from '../../Hooks/useStatusMessages';
 
 export default function useDisAvatar() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [input, setInput] = useState('');
+	const profileMutation = useUpdateProfile();
+
+	// react to mutation status
+	useStatusMessages(
+		profileMutation.status,
+		'Validating changes..',
+		'Internal Server Error, please try again',
+		'Headline Updated!'
+	);
 
 	const showModal = () => {
 		setIsModalVisible(true);
@@ -10,7 +21,7 @@ export default function useDisAvatar() {
 
 	const handleOk = () => {
 		if (input !== '') {
-			// TODO: implement useMutation to invalidate query on PATCH /profile/headline
+			profileMutation.mutate({ headline: input });
 		}
 		setInput('');
 		setIsModalVisible(false);

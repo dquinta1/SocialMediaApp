@@ -9,6 +9,6 @@ const getFollowing = async () => {
 	return data;
 };
 
-export default function useArticles() {
+export default function useFollowing() {
 	return useQuery(followingKeys.all, getFollowing);
 }

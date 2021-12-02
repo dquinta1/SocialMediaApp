@@ -1,16 +1,28 @@
 import { Form } from 'antd';
 import { useQueryClient } from 'react-query';
 import { profileKeys } from '../../../Hooks/Profile/profile-keys-factory';
+import useUpdateProfile from '../../../Hooks/Profile/useUpdateProfile';
+import useStatusMessages from '../../../Hooks/useStatusMessages';
+import usePassword from '../../../Auth/usePassword';
 
 export default function useLogic() {
 	const [form] = Form.useForm();
 	const queryClient = useQueryClient();
 	const data = queryClient.getQueryData(profileKeys.profile);
+	const profileMutation = useUpdateProfile();
+	const { updatePassword } = usePassword();
+
+	// react to profile mutation status
+	useStatusMessages(
+		profileMutation.status,
+		'Validating changes..',
+		'Internal Server Error, please try again',
+		'Profile Updated!'
+	);
 
 	// assign modified input values to edit profile and clear form
 	const onFinish = () => {
 		// create new user Profile based on input
-
 		const newProfile = {
 			username:
 				form.getFieldValue('username') === '' ||
@@ -31,33 +43,26 @@ export default function useLogic() {
 				form.getFieldValue('zipcode') === '' ||
 				typeof form.getFieldValue('zipcode') === typeof undefined
 					? data.zipcode
-					: form.getFieldValue('zipcode')
+					: form.getFieldValue('zipcode'),
 		};
 
-		// TODO: assign values and change state
-		// editProfile(newProfile);
+		// send request with profile changes and invalidate profile queries
+		profileMutation.mutate(newProfile);
+
+		// check if a new password was provided
+		if (
+			form.getFieldValue('password') !== '' ||
+			typeof form.getFieldValue('password') !== typeof undefined
+		) {
+			// request password update
+			updatePassword(
+				form.getFieldValue('oldPassword'),
+				form.getFieldValue('password')
+			);
+		}
 
 		// reset the form fields
 		form.resetFields();
-	};
-
-	const formItemLayout = {
-		labelCol: {
-			xs: {
-				span: 14,
-			},
-			sm: {
-				span: 8,
-			},
-		},
-		wrapperCol: {
-			xs: {
-				span: 14,
-			},
-			sm: {
-				span: 8,
-			},
-		},
 	};
 
 	return {
