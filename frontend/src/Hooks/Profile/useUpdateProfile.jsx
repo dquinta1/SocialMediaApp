@@ -13,6 +13,7 @@ export default function useUpdateProfile() {
 	return useMutation(patchProfile, {
 		onSuccess: () => {
 			queryClient.invalidateQueries(profileKeys.profile);
+			return queryClient.refetchQueries({ stale: true });
 		},
 	});
 }

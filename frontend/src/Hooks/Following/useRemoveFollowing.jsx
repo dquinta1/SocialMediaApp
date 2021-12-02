@@ -8,11 +8,12 @@ export default function useRemoveFollowing() {
 
 	return useMutation((payload) => axios.delete('/following/' + payload), {
 		onSuccess: () => {
-			return queryClient.invalidateQueries({
+			queryClient.invalidateQueries({
 				predicate: (query) =>
 					query.queryKey[0] === followingKeys.all ||
 					query.queryKey[0] === articlesKeys.all,
 			});
+			return queryClient.refetchQueries({ stale: true });
 		},
 	});
 }
