@@ -2,10 +2,27 @@
 
 ### TODO:
 
-#### After Integration ####
+#### React Query - Implement Mutations
 
-- Remove global and local state management logic
-- Add Async State Management logic using React Query
+- Following: PUT '/following/:user'
+- Following: DELETE '/following/:user'
+- Article: POST '/article'
+- Articles: PUT '/articles/:id'
+- Comment: POST '/articles/:id/comment'
+- Comments: PUT '/articles/:id/comments/:index'
+- Comments: DELETE '/articles/:id/comments/:index'
+- Avatar: PUT '/profile/avatar'
+
+#### UI/UX Quality of Life Fixes
+
+- Implement ALL Loading-Status components
+- Implement ALL Error-Status components
+- Profile Form Field Validation: only trigger onFinish if values are modified
+
+#### After Integration
+
+- Fix article pagination in feed using React Query infiniteQuery
+- Implement redirects and protected routing based on user auth
 - Beautify
 
 #### Tests (after code refactor with React Query):
