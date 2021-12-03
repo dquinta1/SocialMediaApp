@@ -4,10 +4,7 @@
 
 #### React Query - Implement Mutations
 
-- Articles: PUT '/articles/:id'
-- Comment: POST '/articles/:id/comment'
 - Comments: PUT '/articles/:id/comments/:index'
-- Comments: DELETE '/articles/:id/comments/:index'
 
 #### UI/UX Quality of Life Fixes
 
