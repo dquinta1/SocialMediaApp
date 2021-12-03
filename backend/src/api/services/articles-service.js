@@ -120,7 +120,7 @@ async function UpdateArticleById(req, res) {
 				return res.status(400).json({ message: 'Invalid Action' });
 		}
 	} catch (error) {
-		return res.status(400).json({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 }
 
