@@ -124,9 +124,23 @@ async function UpdateArticleById(req, res) {
 	}
 }
 
+async function UploadArticleImageById(req, res) {
+	try {
+		const updatedArticle = await Article.findByIdAndUpdate(
+			req.params.id,
+			{ img: req.fileurl },
+			{ returnDocument: 'after' }
+		);
+		return updatedArticle;
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+}
+
 module.exports = {
 	QueryArticles,
 	QueryArticleById,
 	CreateNewArticle,
 	UpdateArticleById,
+	UploadArticleImageById,
 };
