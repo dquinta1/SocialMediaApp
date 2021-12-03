@@ -43,7 +43,7 @@ function NewArticleModal() {
 						<Button
 							key='submit'
 							type='primary'
-							/*{loading={loading}}*/ onClick={handleOk}
+							onClick={handleOk}
 						>
 							Submit
 						</Button>

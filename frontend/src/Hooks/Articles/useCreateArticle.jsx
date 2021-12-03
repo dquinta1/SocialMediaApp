@@ -1,5 +1,4 @@
-import { articlesKeys } from './articles-keys-factory';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import axios from '../../Tools/axios';
 
 const postArticle = async (payload) => {
@@ -8,7 +7,5 @@ const postArticle = async (payload) => {
 };
 
 export default function useCreateArticle() {
-	const queryClient = useQueryClient();
-
 	return useMutation(postArticle);
 }

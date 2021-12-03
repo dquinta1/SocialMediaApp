@@ -1,10 +1,10 @@
-import { Card, Image, Space, Typography } from 'antd';
-import {
-	EditOutlined,
-	CommentOutlined,
-} from '@ant-design/icons';
-import CommentSection from './CommentSection';
 import { useState } from 'react';
+import { Button, Card, Image, Space, Typography } from 'antd';
+import { EditOutlined, CommentOutlined } from '@ant-design/icons';
+import CommentSection from './Comment/CommentSection';
+import EditArticleCard from './EditArticle/EditArticleCard';
+import { useQueryClient } from 'react-query';
+import { profileKeys } from '../../Hooks/Profile/profile-keys-factory';
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -17,11 +17,17 @@ function ArticleListItem({
 	timestamp,
 	comments,
 	src,
-	clickToEdit,
-	clickToComment,
 }) {
 	const [expanded, setExpanded] = useState(false);
 	const [activeKey, setActiveKey] = useState('');
+	const [editing, setEditing] = useState(false);
+
+	const queryClient = useQueryClient();
+	const username = queryClient.getQueryData(profileKeys.profile);
+
+	const toggleEditing = () => {
+		setEditing(!editing);
+	};
 
 	const clickToExpand = () => {
 		if (expanded) {
@@ -33,19 +39,34 @@ function ArticleListItem({
 		}
 	};
 
+	if (editing) {
+		return (
+			<EditArticleCard
+				id={id}
+				oldTitle={title}
+				oldDescription={description}
+				src={src}
+				clickToCancel={toggleEditing}
+			/>
+		);
+	}
+
 	return (
 		<Card
 			hoverable
 			style={{ width: '500px' }}
 			cover={<Image src={src} />}
 			actions={[
-				<CommentOutlined key='comment' onClick={clickToExpand} />,
-				<EditOutlined
-					key='edit'
-					onClick={() => {
-						/*TODO: implement this*/
-					}}
-				/>,
+				<Button type='text' onClick={clickToExpand}>
+					<CommentOutlined key='comment' />
+				</Button>,
+				<Button
+					type='text'
+					disabled={author !== username}
+					onClick={toggleEditing}
+				>
+					<EditOutlined key='edit' />
+				</Button>,
 			]}
 		>
 			<Meta title={title} description={description} />
@@ -62,7 +83,7 @@ function ArticleListItem({
 				<Text>{new Date(timestamp).toLocaleDateString('en-US')}</Text>
 			</Space>
 
-			<CommentSection activeKey={activeKey} comments={comments} />
+			<CommentSection pid={id} activeKey={activeKey} comments={comments} />
 		</Card>
 	);
 }

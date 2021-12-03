@@ -3,13 +3,9 @@ import { List } from 'antd';
 import ArticleListItem from './ArticleListItem';
 import LoadingPosts from './LoadingPosts';
 import useArticles from '../../Hooks/Articles/useArticles';
-import useUpdateArticle from '../../Hooks/Articles/useUpdateArticle';
-import useAddComment from '../../Hooks/Articles/useAddComment';
 
 const ArticlesList = () => {
 	const { data, status, error } = useArticles();
-	const editArticle = useUpdateArticle();
-	const addComment = useAddComment();
 
 	switch (status) {
 		case 'error':
@@ -27,8 +23,6 @@ const ArticlesList = () => {
 								timestamp={post.date}
 								comments={post.comments}
 								src={post.img !== '' ? post.img : null}
-								clickToEdit={editArticle}
-								clickToComment={addComment}
 							/>
 						</List.Item>
 					))}
