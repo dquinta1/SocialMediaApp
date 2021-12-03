@@ -4,15 +4,14 @@
 
 #### React Query - Implement Mutations
 
-- Article: POST '/article'
 - Articles: PUT '/articles/:id'
 - Comment: POST '/articles/:id/comment'
 - Comments: PUT '/articles/:id/comments/:index'
 - Comments: DELETE '/articles/:id/comments/:index'
-- Avatar: PUT '/profile/avatar'
 
 #### UI/UX Quality of Life Fixes
 
+- Refactor All Auth hooks to use mutations
 - Implement ALL Loading-Status components
 - Implement ALL Error-Status components
 - Profile Form Field Validation: only trigger onFinish if values are modified
@@ -29,5 +28,3 @@
 
   - should fetch all articles for current logged in user (posts state is set)
   - should fetch subset of articles for current logged in user given search keyword (posts state is filtered)
-
-
