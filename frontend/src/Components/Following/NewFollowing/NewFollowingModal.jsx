@@ -5,15 +5,8 @@ import useLogic from './useLogic';
 const { TextArea } = Input;
 
 const NewFollowingModal = () => {
-	
-	const {
-		name,
-		isModalVisible,
-		setName,
-		showModal,
-		handleOk,
-		handleCancel,
-	} = useLogic();
+	const { name, isModalVisible, setName, showModal, handleOk, handleCancel } =
+		useLogic();
 
 	return (
 		<>
@@ -25,20 +18,16 @@ const NewFollowingModal = () => {
 				onClick={showModal}
 				style={{ color: 'gray', backgroundColor: 'transparent' }}
 			>
-				Add Follower
+				Follow New User
 			</Button>
 			<Modal
-				title='Add New Following'
+				title="Enter a user's username to follow them"
 				visible={isModalVisible}
 				onOk={handleOk}
 				onCancel={handleCancel}
 				footer={[
 					<div style={{ display: 'flex', justifyContent: 'end' }}>
-						<Button
-							key='submit'
-							type='primary'
-							onClick={handleOk}
-						>
+						<Button key='submit' type='primary' onClick={handleOk}>
 							Submit
 						</Button>
 						<Button key='back' onClick={handleCancel}>
@@ -49,7 +38,7 @@ const NewFollowingModal = () => {
 			>
 				<TextArea
 					rows={1}
-					placeholder='Name'
+					placeholder='Username'
 					value={name}
 					onChange={(e) => {
 						setName(e.target.value);

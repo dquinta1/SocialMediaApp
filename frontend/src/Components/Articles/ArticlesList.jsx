@@ -26,7 +26,7 @@ const ArticlesList = () => {
 								author={post.author}
 								timestamp={post.date}
 								comments={post.comments}
-								src={post.src}
+								src={post.img !== '' ? post.img : null}
 								clickToEdit={editArticle}
 								clickToComment={addComment}
 							/>

@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import { useQueryClient } from 'react-query';
 import { profileKeys } from '../../../Hooks/Profile/profile-keys-factory';
 import useUpdateProfile from '../../../Hooks/Profile/useUpdateProfile';
-import useStatusMessages from '../../../Hooks/useStatusMessages';
+import useStatusMessages from '../../../Hooks/Common/useStatusMessages';
 import usePassword from '../../../Auth/usePassword';
 
 export default function useLogic() {

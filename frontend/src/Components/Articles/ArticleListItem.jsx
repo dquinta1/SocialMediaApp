@@ -1,6 +1,5 @@
 import { Card, Image, Space, Typography } from 'antd';
 import {
-	CameraOutlined,
 	EditOutlined,
 	CommentOutlined,
 } from '@ant-design/icons';
@@ -38,12 +37,9 @@ function ArticleListItem({
 		<Card
 			hoverable
 			style={{ width: '500px' }}
-			cover={<Image src={src} placeholder={<CameraOutlined />} />}
+			cover={<Image src={src} />}
 			actions={[
-				<CommentOutlined
-					key='comment'
-					onClick={ clickToExpand }
-				/>,
+				<CommentOutlined key='comment' onClick={clickToExpand} />,
 				<EditOutlined
 					key='edit'
 					onClick={() => {
@@ -52,17 +48,21 @@ function ArticleListItem({
 				/>,
 			]}
 		>
-
 			<Meta title={title} description={description} />
-            <Space direction='vertical' size='large'>
-
-            </Space>
-			<Space style={{ paddingTop:'15px', paddingBottom:'15px', display: 'flex', justifyContent: 'flex-end' }}>
+			<Space direction='vertical' size='large'></Space>
+			<Space
+				style={{
+					paddingTop: '15px',
+					paddingBottom: '15px',
+					display: 'flex',
+					justifyContent: 'flex-end',
+				}}
+			>
 				<Text>{author}</Text>
 				<Text>{new Date(timestamp).toLocaleDateString('en-US')}</Text>
 			</Space>
 
-            <CommentSection activeKey={ activeKey } comments={ comments } />
+			<CommentSection activeKey={activeKey} comments={comments} />
 		</Card>
 	);
 }

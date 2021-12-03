@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { message } from 'antd';
 import useAddFollowing from '../../../Hooks/Following/useAddFollowing';
-import useStatusMessages from '../../../Hooks/useStatusMessages';
+import useStatusMessages from '../../../Hooks/Common/useStatusMessages';
 
 export default function useLogic() {
 	const [isModalVisible, setIsModalVisible] = useState(false);

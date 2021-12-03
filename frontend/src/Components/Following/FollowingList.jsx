@@ -2,7 +2,7 @@ import { List } from 'antd';
 import FollowingListItem from './FollowingListItem';
 import useFollowing from '../../Hooks/Following/useFollowing';
 import useRemoveFollowing from '../../Hooks/Following/useRemoveFollowing';
-import useStatusMessages from '../../Hooks/useStatusMessages';
+import useStatusMessages from '../../Hooks/Common/useStatusMessages';
 
 const FollowingList = () => {
 	const { data, status, error } = useFollowing();

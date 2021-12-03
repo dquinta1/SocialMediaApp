@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useUpdateProfile from '../../Hooks/Profile/useUpdateProfile';
-import useStatusMessages from '../../Hooks/useStatusMessages';
+import useStatusMessages from '../../Hooks/Common/useStatusMessages';
 
 export default function useDisAvatar() {
 	const [isModalVisible, setIsModalVisible] = useState(false);

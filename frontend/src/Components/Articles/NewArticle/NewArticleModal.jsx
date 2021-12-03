@@ -9,6 +9,7 @@ function NewArticleModal() {
 		isModalVisible,
 		title,
 		description,
+		config,
 		setTitle,
 		setDescription,
 		showModal,
@@ -36,13 +37,7 @@ function NewArticleModal() {
 				onCancel={handleCancel}
 				footer={[
 					<div style={{ display: 'flex', justifyContent: 'end' }}>
-						<Upload
-							accept={'.png,.jpg,.jpeg'}
-							maxCount={1}
-							onChange={() => {
-								/*TODO: Implement this*/
-							}}
-						>
+						<Upload {...config}>
 							<Button type='link' size='middle' icon={<FileImageOutlined />} />
 						</Upload>
 						<Button
