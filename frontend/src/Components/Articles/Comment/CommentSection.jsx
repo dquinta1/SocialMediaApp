@@ -1,17 +1,14 @@
 import React from 'react';
-import { Avatar, Button, Collapse, Comment, List } from 'antd';
-import { UserOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {Collapse, List } from 'antd';
+import CommentItem from './CommentItem';
 import AddCommentSection from './AddCommentSection';
-import { useQueryClient } from 'react-query';
-import { profileKeys } from '../../../Hooks/Profile/profile-keys-factory';
 import useRemoveComment from '../../../Hooks/Comments/useRemoveComment';
 import useStatusMessages from '../../../Hooks/Common/useStatusMessages';
 
 const { Panel } = Collapse;
 
-const CommentSection = ({ pid, comments, activeKey }) => {
-	const queryClient = useQueryClient();
-	const username = queryClient.getQueryData(profileKeys.profile).username;
+const CommentSection = ({ pid, author, comments, activeKey }) => {
+	
 	const commentMutation = useRemoveComment();
 
 	// detailed error messages
@@ -36,35 +33,15 @@ const CommentSection = ({ pid, comments, activeKey }) => {
 		commentMutation.mutate({ id: pid, index });
 	};
 
+	const getIndex = (comment) => {
+		return comments.indexOf(comment);
+	}
+
 	const CommentList = () => (
 		<List>
 			{comments.map((comment) => (
 				<li>
-					<Comment
-						style={{ textAlign: 'start' }}
-						key={comment._id}
-						author={comment.author}
-						avatar={<Avatar src={comment.avatar} icon={<UserOutlined />} />}
-						content={comment.text}
-						datetime={comment.date}
-						actions={[
-							<Button
-								size='small'
-								type='text'
-								disabled={comment.author !== username}
-							>
-								Edit <EditOutlined />
-							</Button>,
-							<Button
-								size='small'
-								type='text'
-								disabled={comment.author !== username}
-								onClick={() => {clickToDelete(comment)}}
-							>
-								Delete <DeleteOutlined />
-							</Button>,
-						]}
-					/>
+					<CommentItem id={pid} author={author} comment={comment} clickToDelete={clickToDelete} getIndex={getIndex} />
 				</li>
 			))}
 		</List>

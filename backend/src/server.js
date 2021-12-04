@@ -53,6 +53,17 @@ mongoose.connection.on('connected', (ref) => {
 	passport.use(googleStrategy);
 	// TODO: add middlewares as needed
 
+	// Google Auth
+	app.get(
+		'/auth/google',
+		passport.authenticate('google', {
+			scope: ['profile','email'],
+		})
+	);
+	app.get('/auth/google/callback',
+    passport.authenticate('google', { successRedirect: 'http://localhost:3000/',
+        failureRedirect: 'http://localhost:3000/login' }));
+
 	// validate user authentication
 	auth(app);
 

@@ -2,10 +2,6 @@
 
 ### TODO:
 
-#### React Query - Implement Mutations
-
-- Comments: PUT '/articles/:id/comments/:index'
-
 #### UI/UX Quality of Life Fixes
 
 - Refactor All Auth hooks to use mutations

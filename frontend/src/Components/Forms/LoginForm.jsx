@@ -11,6 +11,7 @@ const LoginForm = ({ history }) => {
 		setPassword,
 		clickToLogin,
 		goToSignUp,
+		googleSignIn,
 	} = useLogin(history);
 
 	return (
@@ -72,6 +73,9 @@ const LoginForm = ({ history }) => {
 						</Button>
 					</Space>
 				</Form.Item>
+						<Button  href={'http://localhost:4000/auth/google'}>
+							Sign In with Google
+						</Button>
 			</Form>
 		</>
 	);

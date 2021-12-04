@@ -83,7 +83,7 @@ function ArticleListItem({
 				<Text>{new Date(timestamp).toLocaleDateString('en-US')}</Text>
 			</Space>
 
-			<CommentSection pid={id} activeKey={activeKey} comments={comments} />
+			<CommentSection author={author} pid={id} activeKey={activeKey} comments={comments} />
 		</Card>
 	);
 }

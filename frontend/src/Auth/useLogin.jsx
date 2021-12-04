@@ -34,6 +34,14 @@ const useLogin = () => {
 		navigate('/signup');
 	};
 
+	const googleSignIn = async () => {
+		try {
+			await axios.get('/auth/google');
+		} catch (error) {
+			message.error('Check your connection');
+		}
+	};
+
 	// TODO: if user is already authorized then redirect to main page
 	// useEffect(() => {
 	// 	if (auth.token) {
@@ -48,6 +56,7 @@ const useLogin = () => {
 		setPassword,
 		clickToLogin,
 		goToSignUp,
+		googleSignIn,
 	};
 };
 
