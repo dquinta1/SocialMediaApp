@@ -61,8 +61,8 @@ mongoose.connection.on('connected', (ref) => {
 		})
 	);
 	app.get('/auth/google/callback',
-    passport.authenticate('google', { successRedirect: 'http://localhost:3000/',
-        failureRedirect: 'http://localhost:3000/login' }));
+    passport.authenticate('google', { successRedirect: 'http://daq2-social-media-app-frontend.surge.sh/',
+        failureRedirect: 'http://daq2-social-media-app-frontend.surge.sh/login' }));
 
 	// validate user authentication
 	auth(app);

@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
 export default Axios.create({
-	baseURL: 'http://localhost:4000',
+	baseURL: 'https://daq2-social-media-app-server.herokuapp.com/',
 	withCredentials: true,
 });

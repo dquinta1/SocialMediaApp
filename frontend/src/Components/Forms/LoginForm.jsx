@@ -73,7 +73,7 @@ const LoginForm = ({ history }) => {
 						</Button>
 					</Space>
 				</Form.Item>
-						<Button  href={'http://localhost:4000/auth/google'}>
+						<Button  href={'https://daq2-social-media-app-server.herokuapp.com/auth/google'}>
 							Sign In with Google
 						</Button>
 			</Form>
