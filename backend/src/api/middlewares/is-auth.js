@@ -28,6 +28,7 @@ module.exports = (req, res, next) => {
 	if (req.session.isAuth) {
 		next();
 	} else {
+		res.redirect()
 		return res.sendStatus(401);
 	}
 };

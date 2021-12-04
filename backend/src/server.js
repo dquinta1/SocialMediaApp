@@ -13,7 +13,7 @@ const articleRouter = require('./api/routes/articleRoute');
 const profileRouter = require('./api/routes/profileRoute');
 const followingRouter = require('./api/routes/followingRoute');
 
-const corsOptions = { origin: 'https://daq2-social-media-app-frontend.surge.sh/', credentials: true };
+const corsOptions = { origin: 'https://daq2-social-media-app-frontend.surge.sh', credentials: true };
 
 mongoose.connection.on('connected', (ref) => {
 	console.log('Connected to DB!');

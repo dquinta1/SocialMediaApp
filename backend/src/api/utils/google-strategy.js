@@ -5,7 +5,8 @@ const googleStrategy = new GoogleStrategy(
 	{
 		clientID: process.env.GOOGLE_CLIENT,
 		clientSecret: process.env.GOOGLE_SECRET,
-		callbackURL: 'http://localhost:4000/auth/google/callback',
+		callbackURL:
+			'https://daq2-social-media-app-server.herokuapp.com/auth/google/callback',
 	},
 	async function (accessToken, refreshToken, profile, done) {
 		let user = {
@@ -18,21 +19,21 @@ const googleStrategy = new GoogleStrategy(
 		// e.g. internal verification against a users table,
 		// creating new user entries, etc.
 
-        try {
-			//find the user in our database 
-			let newUser = await User.findOne({ googleId: profile.id })
-  
+		try {
+			//find the user in our database
+			let newUser = await User.findOne({ googleId: profile.id });
+
 			if (newUser) {
-			  //If newUser present in our database.
-			  done(null, newUser)
+				//If newUser present in our database.
+				done(null, newUser);
 			} else {
-			  // if newUser is not preset in our database save user data to database.
-			  newUser = await User.create(user)
-			  done(null, newUser)
+				// if newUser is not preset in our database save user data to database.
+				newUser = await User.create(user);
+				done(null, newUser);
 			}
-		  } catch (err) {
-			console.error(err)
-		  }
+		} catch (err) {
+			console.error(err);
+		}
 	}
 );
 
