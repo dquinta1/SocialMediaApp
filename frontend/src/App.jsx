@@ -5,6 +5,7 @@ import MainPage from './Pages/MainPage';
 import ProfilePage from './Pages/ProfilePage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import ProtectedPage from './Pages/ProtectedPage';
 
 const queryClient = new QueryClient();
 
@@ -16,11 +17,22 @@ function App() {
 					<Routes>
 						<Route path='/login' element={<LandingPage />} />
 						<Route path='/signup' element={<SignUpForm />} />
-
-						{/* These should be protected routes */}
-						<Route path='/' element={<MainPage />} />
-						<Route path='/profile' element={<ProfilePage />} />
-						<Route path='*' element={() => '404 NOT FOUND'} />
+						<Route
+							path='/'
+							element={
+								<ProtectedPage>
+									<MainPage />
+								</ProtectedPage>
+							}
+						/>
+						<Route
+							path='/profile'
+							element={
+								<ProtectedPage>
+									<ProfilePage />
+								</ProtectedPage>
+							}
+						/>
 					</Routes>
 				</Router>
 			</QueryClientProvider>

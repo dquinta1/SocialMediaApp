@@ -23,7 +23,7 @@ function ArticleListItem({
 	const [editing, setEditing] = useState(false);
 
 	const queryClient = useQueryClient();
-	const username = queryClient.getQueryData(profileKeys.profile);
+	const username = queryClient.getQueryData(profileKeys.profile).username;
 
 	const toggleEditing = () => {
 		setEditing(!editing);
@@ -83,7 +83,12 @@ function ArticleListItem({
 				<Text>{new Date(timestamp).toLocaleDateString('en-US')}</Text>
 			</Space>
 
-			<CommentSection author={author} pid={id} activeKey={activeKey} comments={comments} />
+			<CommentSection
+				author={author}
+				pid={id}
+				activeKey={activeKey}
+				comments={comments}
+			/>
 		</Card>
 	);
 }

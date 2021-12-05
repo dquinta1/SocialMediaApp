@@ -5,7 +5,6 @@
 #### Implement:
 
 - Search Articles: filter articles query (might need new endpoint)
-- Protected Routing
 
 #### UI/UX Quality of Life Fixes
 
