@@ -33,6 +33,7 @@ async function SignInWithUsernameAndPassword(req, res) {
 		req.session.isAuth = true;
 		req.session.username = user.username;
 		req.session._id = user._id;
+		
 		let msg = { username: username, result: 'success' };
 		res.send(msg);
 		/**END**/

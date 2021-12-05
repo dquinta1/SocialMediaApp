@@ -13,7 +13,10 @@ const articleRouter = require('./api/routes/articleRoute');
 const profileRouter = require('./api/routes/profileRoute');
 const followingRouter = require('./api/routes/followingRoute');
 
-const corsOptions = { origin: 'https://daq2-social-media-app-frontend.surge.sh', credentials: true };
+const corsOptions = {
+	origin: 'https://daq2-social-media-app-frontend.surge.sh',
+	credentials: true,
+};
 
 mongoose.connection.on('connected', (ref) => {
 	console.log('Connected to DB!');
@@ -36,10 +39,16 @@ mongoose.connection.on('connected', (ref) => {
 	app.use(
 		session({
 			store: new RedisStore({ client: redisClient }),
-			cookie: { maxAge: 3600 * 1000 },
+			cookie: {
+				maxAge: 3600 * 1000,
+				sameSite: 'none',
+				secure: true,
+				httpOnly: true,
+			},
 			secret: process.env.REDIS_SECRET,
 			saveUninitialized: false,
 			resave: false,
+			proxy: true,
 		})
 	);
 	app.use(passport.initialize());
@@ -57,12 +66,16 @@ mongoose.connection.on('connected', (ref) => {
 	app.get(
 		'/auth/google',
 		passport.authenticate('google', {
-			scope: ['profile','email'],
+			scope: ['profile', 'email'],
 		})
 	);
-	app.get('/auth/google/callback',
-    passport.authenticate('google', { successRedirect: 'http://daq2-social-media-app-frontend.surge.sh/',
-        failureRedirect: 'http://daq2-social-media-app-frontend.surge.sh/login' }));
+	app.get(
+		'/auth/google/callback',
+		passport.authenticate('google', {
+			successRedirect: 'http://daq2-social-media-app-frontend.surge.sh/',
+			failureRedirect: 'http://daq2-social-media-app-frontend.surge.sh/login',
+		})
+	);
 
 	// validate user authentication
 	auth(app);

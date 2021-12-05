@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
 	if (req.session.isAuth) {
 		next();
 	} else {
-		return res.status(401).redirect('https://daq2-social-media-app-frontend.surge.sh');
+		return res.sendStatus(401);
 	}
 };
 /**END**/

@@ -20,7 +20,7 @@ function App() {
 						{/* These should be protected routes */}
 						<Route path='/' element={<MainPage />} />
 						<Route path='/profile' element={<ProfilePage />} />
-						{/* <Route path='*' element={() => '404 NOT FOUND'} /> */}
+						<Route path='*' element={() => '404 NOT FOUND'} />
 					</Routes>
 				</Router>
 			</QueryClientProvider>
