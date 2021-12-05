@@ -14,7 +14,10 @@ const profileRouter = require('./api/routes/profileRoute');
 const followingRouter = require('./api/routes/followingRoute');
 
 const corsOptions = {
-	origin: 'https://daq2-social-media-app-frontend.surge.sh',
+	origin: [
+		'https://daq2-social-media-app-frontend.surge.sh',
+		'http://localhost:3000',
+	],
 	credentials: true,
 };
 
