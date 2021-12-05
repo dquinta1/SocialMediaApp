@@ -2,6 +2,11 @@
 
 ### TODO:
 
+#### Implement:
+
+- Search Articles: filter articles query (might need new endpoint)
+- Protected Routing
+
 #### UI/UX Quality of Life Fixes
 
 - Refactor All Auth hooks to use mutations
