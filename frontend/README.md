@@ -11,7 +11,6 @@
 
 #### UI/UX Quality of Life Fixes
 
-- Refactor All Auth hooks to use mutations
 - Implement ALL Loading-Status components
 - Implement ALL Error-Status components
 - Profile Form Field Validation: only trigger onFinish if values are modified

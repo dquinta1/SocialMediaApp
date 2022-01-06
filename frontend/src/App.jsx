@@ -1,4 +1,4 @@
-import './App.css';
+import './App.less';
 import LandingPage from './Pages/LandingPage';
 import SignUpForm from './Components/Forms/SignUpForm';
 import MainPage from './Pages/MainPage';
